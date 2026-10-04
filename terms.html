@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Terms of Service & Rental Protocol | Veloce Prestige Fleet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. BESPOKE PRESTIGE DESIGN TOKENS (LIGHT LUXURY)
+       ========================================================================== */
+    :root {
+      --gold-primary: #b88e1e;
+      --gold-hover: #9c7713;
+      --gold-light: #fef9e8;
+      --gold-border: rgba(184, 142, 30, 0.28);
+      --gold-glow: rgba(184, 142, 30, 0.18);
+
+      --carbon-950: #0a0d14;
+      --carbon-900: #111520;
+      --carbon-800: #1b202e;
+      --carbon-700: #2d3548;
+
+      --text-main: #0c0f17;
+      --text-muted: #525a6c;
+      --text-subtle: #8a94a6;
+
+      --surface-body: #f8f9fb;
+      --surface-card: #ffffff;
+      --surface-card-subtle: #f1f3f7;
+
+      --line-subtle: rgba(12, 15, 23, 0.08);
+      --line-medium: rgba(12, 15, 23, 0.12);
+
+      --accent-green: #0d9488;
+      --accent-green-bg: #f0fdfa;
+      --warning-gold: #d97706;
+
+      --font-display: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+      --radius-xs: 6px;
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+
+      --shadow-ambient: 0 4px 20px -2px rgba(12, 15, 23, 0.04), 0 1px 3px rgba(12, 15, 23, 0.02);
+      --shadow-elevated: 0 16px 36px -8px rgba(12, 15, 23, 0.08), 0 4px 12px -2px rgba(12, 15, 23, 0.03);
+      --shadow-floating: 0 24px 50px -12px rgba(12, 15, 23, 0.12), 0 0 0 1px rgba(12, 15, 23, 0.05);
+
+      --ease-luxury: cubic-bezier(0.19, 1, 0.22, 1);
+      --transition-fast: 0.22s var(--ease-luxury);
+      --transition-base: 0.35s var(--ease-luxury);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--surface-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      padding-bottom: calc(74px + env(safe-area-inset-bottom));
+      background-image: 
+        radial-gradient(1200px 500px at 100% 0%, rgba(184, 142, 30, 0.04) 0%, transparent 70%),
+        radial-gradient(900px 400px at 0% 40%, rgba(13, 148, 136, 0.03) 0%, transparent 60%);
+      background-attachment: fixed;
+    }
+
+    @media (min-width: 992px) {
+      body { padding-bottom: 0; }
+    }
+
+    img { display: block; max-width: 100%; }
+    svg { display: inline-block; vertical-align: middle; flex-shrink: 0; }
+
+    .container {
+      width: 100%;
+      max-width: 1260px;
+      margin-inline: auto;
+      padding-inline: clamp(20px, 4vw, 32px);
+    }
+
+    /* BUTTONS */
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 12px 26px;
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition-base);
+      border: 1px solid transparent;
+      outline: none;
+      min-height: 48px;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--carbon-950);
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(10, 13, 20, 0.22);
+    }
+    .btn-primary:hover {
+      background: var(--carbon-800);
+      box-shadow: 0 8px 24px rgba(10, 13, 20, 0.28);
+      transform: translateY(-2px);
+      color: #ffffff;
+    }
+
+    .btn-secondary {
+      background: var(--surface-card);
+      color: var(--carbon-900);
+      border-color: var(--line-medium);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+    .btn-secondary:hover {
+      background: var(--surface-card-subtle);
+      border-color: rgba(12, 15, 23, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* =========================================================
+       2. TOPBAR & NAVIGATION (EXACT MATCH)
+    ========================================================= */
+    .topbar {
+      background: var(--carbon-950);
+      color: var(--text-subtle);
+      font-size: 12px;
+      font-weight: 500;
+      padding-block: 9px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .topbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .topbar-left, .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .topbar-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #9ba4b5;
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .topbar-item:hover { color: #ffffff; }
+    .topbar-divider { width: 1px; height: 12px; background: rgba(255, 255, 255, 0.15); }
+
+    header {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--line-subtle);
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 78px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      text-decoration: none;
+      letter-spacing: -0.03em;
+    }
+    .logo-badge {
+      background: var(--carbon-950);
+      color: var(--gold-primary);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(184, 142, 30, 0.35);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .nav-menu {
+      display: none;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+    @media (min-width: 992px) {
+      .nav-menu { display: flex; }
+    }
+    .nav-link {
+      font-weight: 600;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding-block: 10px;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--carbon-950); }
+
+    .nav-actions { display: none; align-items: center; gap: 12px; }
+    @media (min-width: 992px) {
+      .nav-actions { display: flex; }
+    }
+
+    .hamburger-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      background: transparent;
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      padding: 8px;
+    }
+    .hamburger-btn span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background-color: var(--carbon-950);
+      border-radius: var(--radius-full);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .hamburger-btn.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-btn.active span:nth-child(2) { opacity: 0; }
+    .hamburger-btn.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (min-width: 992px) {
+      .hamburger-btn { display: none; }
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 13, 20, 0.45);
+      backdrop-filter: blur(6px);
+      z-index: 1050;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition-fast);
+    }
+    .mobile-drawer-overlay.open { opacity: 1; visibility: visible; }
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 86%;
+      max-width: 330px;
+      height: 100%;
+      background: var(--surface-card);
+      z-index: 1060;
+      box-shadow: -15px 0 35px rgba(0, 0, 0, 0.08);
+      transform: translateX(100%);
+      transition: transform var(--transition-base);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 24px 22px 90px;
+    }
+    .mobile-drawer.open { transform: translateX(0); }
+    .mobile-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line-subtle);
+    }
+    .mobile-nav-list { list-style: none; display: flex; flex-direction: column; }
+    .mobile-nav-item { border-bottom: 1px solid var(--surface-card-subtle); }
+    .mobile-nav-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 4px;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--carbon-950);
+      text-decoration: none;
+    }
+
+    /* Mobile Bottom Quick-Action Bar */
+    .mobile-bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--line-medium);
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      display: flex;
+      gap: 10px;
+      z-index: 990;
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+    }
+    @media (min-width: 992px) {
+      .mobile-bottom-bar { display: none; }
+    }
+    .mobile-bottom-bar .btn { flex: 1; min-height: 44px; padding: 8px 12px; font-size: 13.5px; }
+
+    /* =========================================================
+       3. LEGAL HERO & CONTENT STYLING
+    ========================================================= */
+    .legal-hero {
+      padding-top: clamp(40px, 6vw, 68px);
+      padding-bottom: clamp(24px, 4vw, 40px);
+      background: var(--surface-card);
+      border-bottom: 1px solid var(--line-subtle);
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-subtle);
+      margin-bottom: 12px;
+    }
+    .breadcrumb a { color: var(--text-muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--carbon-950); }
+
+    .legal-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 4.5vw, 44px);
+      font-weight: 800;
+      color: var(--carbon-950);
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .legal-hero p {
+      font-size: 13.5px;
+      color: var(--text-subtle);
+    }
+
+    .legal-content-wrap {
+      max-width: 860px;
+      margin-inline: auto;
+      padding-block: clamp(40px, 6vw, 80px);
+    }
+    .legal-card {
+      background: var(--surface-card);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-lg);
+      padding: clamp(28px, 4vw, 50px);
+      box-shadow: var(--shadow-ambient);
+    }
+    .legal-card h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      margin-top: 32px;
+      margin-bottom: 12px;
+    }
+    .legal-card h3:first-child {
+      margin-top: 0;
+    }
+    .legal-card p {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+    .legal-card ul {
+      margin-bottom: 20px;
+      padding-left: 20px;
+      color: var(--text-muted);
+      font-size: 14.5px;
+      line-height: 1.75;
+    }
+    .legal-card li {
+      margin-bottom: 8px;
+    }
+
+    /* =========================================================
+       4. FOOTER (EDITORIAL 4-COLUMN EXACT MATCH)
+    ========================================================= */
+    footer {
+      background: var(--carbon-950);
+      color: #9ba4b5;
+      padding-top: 60px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 36px;
+      margin-bottom: 40px;
+    }
+    @media (min-width: 576px) {
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 992px) {
+      .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1.3fr; gap: 40px; }
+    }
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+      text-decoration: none;
+      margin-bottom: 12px;
+    }
+    .footer-desc { font-size: 13.5px; line-height: 1.6; margin-bottom: 18px; color: #9ba4b5; }
+    .social-links { display: flex; gap: 10px; }
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: var(--transition-fast);
+    }
+    .social-btn:hover {
+      background: var(--gold-primary);
+      color: #ffffff;
+      border-color: var(--gold-primary);
+    }
+    .footer-col h4 {
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      color: #9ba4b5;
+      text-decoration: none;
+      font-size: 13.5px;
+      transition: color var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-links a:hover { color: #ffffff; }
+
+    .footer-contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13.5px;
+      color: #9ba4b5;
+    }
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .footer-contact-item svg {
+      color: var(--gold-primary);
+      margin-top: 3px;
+    }
+    .footer-contact-item a {
+      color: #9ba4b5;
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .footer-contact-item a:hover { color: #ffffff; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 20px 0;
+      font-size: 12.5px;
+      color: var(--text-subtle);
+    }
+    .footer-bottom .container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .footer-bottom .container {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+    .footer-legal-links { display: flex; justify-content: center; gap: 16px; }
+    .footer-legal-links a { color: var(--text-subtle); text-decoration: none; transition: color var(--transition-fast); }
+    .footer-legal-links a:hover { color: #ffffff; }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================
+       1. TOPBAR & AIRSIDE NAVBAR (EXACT MATCH)
+  ========================================================= -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <a href="tel:+18004567890" class="topbar-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          Direct Concierge Line: +1 (800) 456-7890
+        </a>
+        <div class="topbar-divider"></div>
+        <span class="topbar-item" style="display: none; @media(min-width: 600px){display:inline-flex;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Rental Guidelines &amp; Protocol
+        </span>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-item" style="color: #ffffff; font-weight: 700;">USD ($) / Global Currency Tier</span>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="logo">
+        <span class="logo-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        </span>
+        VELOCE
+      </a>
+
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+        <li class="nav-item"><a href="index.html#services" class="nav-link">Services</a></li>
+        <li class="nav-item"><a href="cars.html" class="nav-link">Our Fleets</a></li>
+        <li class="nav-item"><a href="account.html" class="nav-link">My Account</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="cars.html" class="btn btn-secondary">Explore Fleet</a>
+        <a href="contact.html" class="btn btn-primary">Concierge Support</a>
+      </div>
+
+      <button class="hamburger-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer-overlay" id="drawerOverlay"></div>
+  <aside class="mobile-drawer" id="mobileDrawer">
+    <div class="mobile-drawer-header">
+      <a href="index.html" class="logo" style="font-size: 20px;">
+        <span class="logo-badge" style="width: 32px; height: 32px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        </span>
+        VELOCE
+      </a>
+    </div>
+    <ul class="mobile-nav-list">
+      <li class="mobile-nav-item"><a href="index.html" class="mobile-nav-link close-drawer">Home</a></li>
+      <li class="mobile-nav-item"><a href="about.html" class="mobile-nav-link close-drawer">About Us</a></li>
+      <li class="mobile-nav-item"><a href="index.html#services" class="mobile-nav-link close-drawer">Services</a></li>
+      <li class="mobile-nav-item"><a href="cars.html" class="mobile-nav-link close-drawer">Our Fleets</a></li>
+      <li class="mobile-nav-item"><a href="account.html" class="mobile-nav-link close-drawer">My Account</a></li>
+      <li class="mobile-nav-item"><a href="contact.html" class="mobile-nav-link close-drawer">Contact</a></li>
+    </ul>
+    <div class="mobile-drawer-actions">
+      <a href="cars.html" class="btn btn-primary close-drawer" style="width: 100%;">Explore Fleet</a>
+      <a href="tel:+18004567890" class="btn btn-secondary" style="width: 100%;">Call Operations</a>
+    </div>
+  </aside>
+
+  <!-- Mobile Fixed Bottom Action Bar -->
+  <div class="mobile-bottom-bar">
+    <a href="tel:+18004567890" class="btn btn-secondary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      Call
+    </a>
+    <a href="cars.html" class="btn btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+      Explore Fleet
+    </a>
+  </div>
+
+  <!-- =========================================================
+       3. LEGAL HERO & CONTENT (TERMS OF SERVICE)
+  ========================================================= -->
+  <section class="legal-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a><span>/</span><span style="color: var(--carbon-950);">Terms of Service</span>
+      </div>
+      <h1>Terms of Service &amp; Rental Protocol</h1>
+      <p>Governing chassis allocations, airside handovers, and zero-excess coverage frameworks.</p>
+    </div>
+  </section>
+
+  <main class="container legal-content-wrap">
+    <div class="legal-card">
+      <h3>1. Agreement to Terms</h3>
+      <p>By authorizing a vehicle dispatch or acquiring an NFC key pass through Veloce, you agree to abide by these Terms of Service. All rentals are subject to driver verification, valid licensing, and approved payment tokenization.</p>
+
+      <h3>2. Exact VIN Allocation and Substitution</h3>
+      <p>Veloce guarantees the exact VIN and specification reserved by the client. In the extraordinary event of mechanical maintenance or transit delays, clients will be upgraded to an equivalent or superior chassis at zero additional cost.</p>
+
+      <h3>3. Cancellation and Modification Window</h3>
+      <p>Expeditions may be canceled or rescheduled without penalty up to 24 hours prior to the scheduled airside handover window. Cancellations within 24 hours incur a single-day holding fee unless covered under corporate executive agreements.</p>
+
+      <h3>4. Insurance and Collision Damage Waiver</h3>
+      <p>All Veloce bookings include zero-excess comprehensive protection covering mechanical recovery and standard third-party liability, provided vehicles are operated in accordance with federal and local traffic laws on paved roads.</p>
+    </div>
+  </main>
+
+  <!-- =========================================================
+       4. FOOTER (EDITORIAL 4-COLUMN EXACT MATCH)
+  ========================================================= -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <a href="index.html" class="footer-logo">
+          <span class="logo-badge" style="width: 32px; height: 32px; font-size: 15px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </span>
+          VELOCE
+        </a>
+        <p class="footer-desc">
+          Crafting exceptional rental journeys across North America and Europe. Instant roadside lock, zero excess options, and elite concierge support.
+        </p>
+        <div class="social-links">
+          <a href="#" class="social-btn" aria-label="Twitter">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="LinkedIn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="Instagram">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Vehicles &amp; Fleet</h4>
+        <ul class="footer-links">
+          <li><a href="cars.html">Sports Cars &amp; Coupes</a></li>
+          <li><a href="cars.html">Electric Fleet (EV)</a></li>
+          <li><a href="cars.html">Luxury Executive SUVs</a></li>
+          <li><a href="index.html#services">Chauffeur Service</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support &amp; Policy</h4>
+        <ul class="footer-links">
+          <li><a href="about.html">Rental Guidelines</a></li>
+          <li><a href="index.html#how-it-works">Comprehensive Cover</a></li>
+          <li><a href="index.html#faq">Charging Policy</a></li>
+          <li><a href="index.html#faq">Help Center &amp; FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Headquarters &amp; Concierge</h4>
+        <p class="footer-desc" style="margin-bottom: 14px;">Direct line to client operations and private airside logistics.</p>
+        <ul class="footer-contact-list">
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>750 Lexington Ave, 24th Fl, New York, NY 10022</span>
+          </li>
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <a href="tel:+18004567890">+1 (800) 456-7890</a>
+          </li>
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <a href="mailto:concierge@velocefleet.com">concierge@velocefleet.com</a>
+          </li>
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>Mon - Sun: 24/7 Priority Dispatch</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div>&copy; 2026 Veloce Fleet Technologies Inc. All rights reserved.</div>
+        <div class="footer-legal-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="#">Security Protocol</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+    const closeDrawerLinks = document.querySelectorAll('.close-drawer');
+
+    function toggleMobileDrawer(open) {
+      mobileDrawer.classList.toggle('open', open);
+      drawerOverlay.classList.toggle('open', open);
+      mobileMenuBtn.classList.toggle('active', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    mobileMenuBtn.addEventListener('click', () => toggleMobileDrawer(!mobileDrawer.classList.contains('open')));
+    drawerOverlay.addEventListener('click', () => toggleMobileDrawer(false));
+    closeDrawerLinks.forEach(l => l.addEventListener('click', () => toggleMobileDrawer(false)));
+  </script>
+</body>
+</html>

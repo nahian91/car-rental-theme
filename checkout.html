@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Airside Checkout & Dispatch Authorization | Veloce Prestige Fleet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. BESPOKE PRESTIGE DESIGN TOKENS (LIGHT LUXURY)
+       ========================================================================== */
+    :root {
+      --gold-primary: #b88e1e;
+      --gold-hover: #9c7713;
+      --gold-light: #fef9e8;
+      --gold-border: rgba(184, 142, 30, 0.28);
+      --gold-glow: rgba(184, 142, 30, 0.18);
+
+      --carbon-950: #0a0d14;
+      --carbon-900: #111520;
+      --carbon-800: #1b202e;
+      --carbon-700: #2d3548;
+
+      --text-main: #0c0f17;
+      --text-muted: #525a6c;
+      --text-subtle: #8a94a6;
+
+      --surface-body: #f8f9fb;
+      --surface-card: #ffffff;
+      --surface-card-subtle: #f1f3f7;
+
+      --line-subtle: rgba(12, 15, 23, 0.08);
+      --line-medium: rgba(12, 15, 23, 0.12);
+
+      --accent-green: #0d9488;
+      --accent-green-bg: #f0fdfa;
+      --warning-gold: #d97706;
+
+      --font-display: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+
+      --radius-xs: 6px;
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+
+      --shadow-ambient: 0 4px 20px -2px rgba(12, 15, 23, 0.04), 0 1px 3px rgba(12, 15, 23, 0.02);
+      --shadow-elevated: 0 16px 36px -8px rgba(12, 15, 23, 0.08), 0 4px 12px -2px rgba(12, 15, 23, 0.03);
+      --shadow-floating: 0 24px 50px -12px rgba(12, 15, 23, 0.12), 0 0 0 1px rgba(12, 15, 23, 0.05);
+
+      --ease-luxury: cubic-bezier(0.19, 1, 0.22, 1);
+      --transition-fast: 0.22s var(--ease-luxury);
+      --transition-base: 0.35s var(--ease-luxury);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--surface-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      padding-bottom: calc(74px + env(safe-area-inset-bottom));
+      background-image: 
+        radial-gradient(1200px 500px at 100% 0%, rgba(184, 142, 30, 0.04) 0%, transparent 70%),
+        radial-gradient(900px 400px at 0% 40%, rgba(13, 148, 136, 0.03) 0%, transparent 60%);
+      background-attachment: fixed;
+    }
+
+    @media (min-width: 992px) {
+      body { padding-bottom: 0; }
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    svg {
+      display: inline-block;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1260px;
+      margin-inline: auto;
+      padding-inline: clamp(20px, 4vw, 32px);
+    }
+
+    /* BUTTONS */
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 13px 26px;
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition-base);
+      border: 1px solid transparent;
+      outline: none;
+      min-height: 48px;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--carbon-950);
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(10, 13, 20, 0.22);
+    }
+    .btn-primary:hover {
+      background: var(--carbon-800);
+      box-shadow: 0 8px 24px rgba(10, 13, 20, 0.28);
+      transform: translateY(-2px);
+      color: #ffffff;
+    }
+
+    .btn-secondary {
+      background: var(--surface-card);
+      color: var(--carbon-900);
+      border-color: var(--line-medium);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+    .btn-secondary:hover {
+      background: var(--surface-card-subtle);
+      border-color: rgba(12, 15, 23, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* =========================================================
+       2. TOPBAR & NAVIGATION
+       ========================================================= */
+    .topbar {
+      background: var(--carbon-950);
+      color: var(--text-subtle);
+      font-size: 12px;
+      font-weight: 500;
+      padding-block: 9px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .topbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .topbar-left, .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .topbar-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #9ba4b5;
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .topbar-item:hover { color: #ffffff; }
+    .topbar-divider { width: 1px; height: 12px; background: rgba(255, 255, 255, 0.15); }
+
+    header {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--line-subtle);
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 78px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      text-decoration: none;
+      letter-spacing: -0.03em;
+    }
+    .logo-badge {
+      background: var(--carbon-950);
+      color: var(--gold-primary);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(184, 142, 30, 0.35);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .nav-menu {
+      display: none;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+    @media (min-width: 992px) {
+      .nav-menu { display: flex; }
+    }
+    .nav-link {
+      font-weight: 600;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding-block: 10px;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--carbon-950); }
+
+    .nav-actions { display: none; align-items: center; gap: 12px; }
+    @media (min-width: 992px) {
+      .nav-actions { display: flex; }
+    }
+
+    .hamburger-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      background: transparent;
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      padding: 8px;
+    }
+    .hamburger-btn span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background-color: var(--carbon-950);
+      border-radius: var(--radius-full);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .hamburger-btn.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-btn.active span:nth-child(2) { opacity: 0; }
+    .hamburger-btn.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (min-width: 992px) {
+      .hamburger-btn { display: none; }
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 13, 20, 0.45);
+      backdrop-filter: blur(6px);
+      z-index: 1050;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition-fast);
+    }
+    .mobile-drawer-overlay.open { opacity: 1; visibility: visible; }
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 86%;
+      max-width: 330px;
+      height: 100%;
+      background: var(--surface-card);
+      z-index: 1060;
+      box-shadow: -15px 0 35px rgba(0, 0, 0, 0.08);
+      transform: translateX(100%);
+      transition: transform var(--transition-base);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 24px 22px 90px;
+    }
+    .mobile-drawer.open { transform: translateX(0); }
+    .mobile-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line-subtle);
+    }
+    .mobile-nav-list { list-style: none; display: flex; flex-direction: column; }
+    .mobile-nav-item { border-bottom: 1px solid var(--surface-card-subtle); }
+    .mobile-nav-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 4px;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--carbon-950);
+      text-decoration: none;
+    }
+
+    /* Mobile Bottom Quick-Action Bar */
+    .mobile-bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--line-medium);
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      display: flex;
+      gap: 10px;
+      z-index: 990;
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+    }
+    @media (min-width: 992px) {
+      .mobile-bottom-bar { display: none; }
+    }
+    .mobile-bottom-bar .btn { flex: 1; min-height: 44px; padding: 8px 12px; font-size: 13.5px; }
+
+    /* =========================================================
+       3. CHECKOUT HEADER & PROGRESS INDICATOR
+       ========================================================= */
+    .checkout-header {
+      padding-top: clamp(32px, 5vw, 54px);
+      padding-bottom: clamp(20px, 3vw, 32px);
+      border-bottom: 1px solid var(--line-subtle);
+      background: var(--surface-card);
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-subtle);
+      margin-bottom: 12px;
+    }
+    .breadcrumb a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .breadcrumb a:hover { color: var(--carbon-950); }
+
+    .checkout-header-flex {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    @media (min-width: 768px) {
+      .checkout-header-flex {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+    }
+    .checkout-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 38px);
+      font-weight: 800;
+      color: var(--carbon-950);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .checkout-header p {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* 3-Step Milestone Tracker */
+    .steps-tracker {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .step-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      background: var(--surface-card-subtle);
+      border: 1px solid var(--line-medium);
+      color: var(--text-muted);
+    }
+    .step-pill.completed {
+      color: var(--accent-green);
+      background: var(--accent-green-bg);
+      border-color: rgba(13, 148, 136, 0.25);
+    }
+    .step-pill.active {
+      color: var(--carbon-950);
+      background: #ffffff;
+      border-color: var(--carbon-950);
+      box-shadow: var(--shadow-ambient);
+    }
+    .step-divider {
+      width: 14px;
+      height: 1px;
+      background: var(--line-medium);
+    }
+
+    /* =========================================================
+       4. CHECKOUT TWO-COLUMN SPLIT
+       ========================================================= */
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 36px;
+      padding-block: clamp(32px, 5vw, 64px);
+    }
+    @media (min-width: 992px) {
+      .checkout-layout {
+        grid-template-columns: 1.25fr 0.75fr;
+        gap: 40px;
+        align-items: start;
+      }
+    }
+
+    /* Form Modules */
+    .form-module-card {
+      background: var(--surface-card);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-lg);
+      padding: clamp(24px, 3.5vw, 36px);
+      box-shadow: var(--shadow-ambient);
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .module-badge-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--carbon-950);
+      color: var(--gold-primary);
+      font-size: 11px;
+      font-weight: 800;
+      margin-right: 8px;
+    }
+    .module-title {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .module-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+      padding-left: 32px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 600px) {
+      .form-grid { grid-template-columns: repeat(2, 1fr); }
+      .col-span-full { grid-column: span 2; }
+    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label {
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--carbon-900);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .input-shell {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-shell svg {
+      position: absolute;
+      left: 14px;
+      color: var(--text-subtle);
+      pointer-events: none;
+      transition: color var(--transition-fast);
+    }
+    .input-control {
+      width: 100%;
+      height: 48px;
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-sm);
+      padding-left: 42px;
+      padding-right: 14px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--carbon-950);
+      background: var(--surface-card-subtle);
+      outline: none;
+      transition: var(--transition-fast);
+    }
+    .input-control:focus {
+      border-color: var(--carbon-950);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(12, 15, 23, 0.08);
+    }
+    .input-control:focus + svg { color: var(--carbon-950); }
+
+    /* Interactive Holographic Credit Card Simulation */
+    .card-preview-stage {
+      background: linear-gradient(135deg, #111520 0%, #1e2538 50%, #0a0d14 100%);
+      border-radius: var(--radius-md);
+      padding: 22px 24px;
+      color: #ffffff;
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(10, 13, 20, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .card-preview-stage::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(184, 142, 30, 0.22) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .card-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+    .card-chip {
+      width: 36px;
+      height: 26px;
+      background: linear-gradient(135deg, #d4af37, #f3e5ab);
+      border-radius: 4px;
+      position: relative;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+    .card-brand-name {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      color: #ffffff;
+      opacity: 0.9;
+    }
+    .card-number-display {
+      font-family: var(--font-mono);
+      font-size: clamp(15px, 2vw, 18px);
+      letter-spacing: 0.18em;
+      margin-bottom: 16px;
+      color: #f1f5f9;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    }
+    .card-bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .card-holder-label {
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #94a3b8;
+    }
+    .card-holder-val {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-top: 2px;
+      color: #ffffff;
+    }
+    .card-expiry-val {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    /* Payment Tabs */
+    .payment-tab-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .payment-tab {
+      background: var(--surface-card-subtle);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-sm);
+      padding: 12px 10px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--carbon-800);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition-fast);
+    }
+    .payment-tab:hover {
+      background: #ffffff;
+      border-color: var(--carbon-950);
+    }
+    .payment-tab.active {
+      background: #ffffff;
+      border-color: var(--carbon-950);
+      color: var(--carbon-950);
+      box-shadow: var(--shadow-ambient);
+    }
+    .payment-tab svg { color: var(--gold-primary); }
+
+    /* Security Notice Pill */
+    .security-notice-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface-card-subtle);
+      border: 1px dashed var(--line-medium);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      margin-top: 14px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+    .security-notice-pill svg { color: var(--accent-green); }
+
+    /* RIGHT COLUMN: BOARDING PASS ITINERARY MANIFEST */
+    .itinerary-card {
+      background: var(--surface-card);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-lg);
+      padding: clamp(24px, 3.5vw, 32px);
+      box-shadow: var(--shadow-floating);
+      position: sticky;
+      top: 98px;
+    }
+    .itinerary-header {
+      padding-bottom: 16px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid var(--line-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .itinerary-header h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      letter-spacing: -0.01em;
+    }
+    .manifest-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--surface-card-subtle);
+      border: 1px solid var(--line-medium);
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: var(--carbon-900);
+    }
+
+    /* Vehicle Mini Card inside summary */
+    .vehicle-mini-summary {
+      display: flex;
+      gap: 14px;
+      padding-bottom: 18px;
+      border-bottom: 1px dashed var(--line-medium);
+      margin-bottom: 18px;
+    }
+    .mini-thumb-wrap {
+      width: 96px;
+      height: 68px;
+      border-radius: var(--radius-xs);
+      overflow: hidden;
+      background: var(--carbon-950);
+      flex-shrink: 0;
+      border: 1px solid var(--line-subtle);
+    }
+    .mini-thumb-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .mini-info h4 {
+      font-family: var(--font-display);
+      font-size: 16.5px;
+      font-weight: 800;
+      color: var(--carbon-950);
+    }
+    .mini-info span {
+      display: block;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .mini-vin {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-green);
+      margin-top: 4px;
+    }
+
+    /* Perforated Boarding Pass Route Block */
+    .flight-route-block {
+      background: var(--surface-card-subtle);
+      border: 1px solid var(--line-subtle);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-bottom: 18px;
+    }
+    .route-node-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .route-node strong {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      display: block;
+      line-height: 1;
+    }
+    .route-node span {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-top: 3px;
+      display: block;
+    }
+    .route-plane-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--gold-primary);
+      opacity: 0.8;
+    }
+    .route-plane-line {
+      width: 40px;
+      height: 1px;
+      background: repeating-linear-gradient(to right, var(--gold-primary) 0, var(--gold-primary) 4px, transparent 4px, transparent 8px);
+    }
+
+    /* Itinerary Parameters */
+    .itinerary-details-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 18px;
+      border-bottom: 1px dashed var(--line-medium);
+    }
+    .itinerary-detail-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+    .itinerary-detail-row .row-label { color: var(--text-muted); }
+    .itinerary-detail-row .row-val {
+      font-weight: 700;
+      color: var(--carbon-950);
+      text-align: right;
+    }
+
+    /* Billing Breakdown Panel */
+    .billing-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .bill-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .bill-row.total-row {
+      border-top: 1px solid var(--line-medium);
+      padding-top: 14px;
+      margin-top: 4px;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--carbon-950);
+    }
+    .bill-total-fig {
+      font-family: var(--font-display);
+      font-size: 26px;
+      color: var(--carbon-950);
+      line-height: 1;
+    }
+
+    /* Inline Confirmation Notification (100% Popup-Free) */
+    .checkout-success-banner {
+      display: none;
+      padding: 18px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-green-bg);
+      border: 1px solid rgba(13, 148, 136, 0.35);
+      color: var(--accent-green);
+      font-size: 13.5px;
+      font-weight: 700;
+      line-height: 1.5;
+      text-align: center;
+      margin-top: 14px;
+    }
+    .checkout-success-banner.show { display: block; }
+
+    /* =========================================================
+       5. FOOTER (EDITORIAL 4-COLUMN)
+    ========================================================= */
+    footer {
+      background: var(--carbon-950);
+      color: #9ba4b5;
+      padding-top: 60px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 36px;
+      margin-bottom: 40px;
+    }
+    @media (min-width: 576px) {
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 992px) {
+      .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1.3fr; gap: 40px; }
+    }
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+      text-decoration: none;
+      margin-bottom: 12px;
+    }
+    .footer-desc { font-size: 13.5px; line-height: 1.6; margin-bottom: 18px; color: #9ba4b5; }
+    .social-links { display: flex; gap: 10px; }
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: var(--transition-fast);
+    }
+    .social-btn:hover {
+      background: var(--gold-primary);
+      color: #ffffff;
+      border-color: var(--gold-primary);
+    }
+    .footer-col h4 {
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      color: #9ba4b5;
+      text-decoration: none;
+      font-size: 13.5px;
+      transition: color var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-links a:hover { color: #ffffff; }
+
+    .footer-contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13.5px;
+      color: #9ba4b5;
+    }
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .footer-contact-item svg {
+      color: var(--gold-primary);
+      margin-top: 3px;
+    }
+    .footer-contact-item a {
+      color: #9ba4b5;
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .footer-contact-item a:hover { color: #ffffff; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 20px 0;
+      font-size: 12.5px;
+      color: var(--text-subtle);
+    }
+    .footer-bottom .container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .footer-bottom .container {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+    .footer-legal-links { display: flex; justify-content: center; gap: 16px; }
+    .footer-legal-links a { color: var(--text-subtle); text-decoration: none; transition: color var(--transition-fast); }
+    .footer-legal-links a:hover { color: #ffffff; }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================
+       1. TOPBAR & AIRSIDE NAVBAR
+  ========================================================= -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <a href="tel:+18004567890" class="topbar-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          Direct Concierge Line: +1 (800) 456-7890
+        </a>
+        <div class="topbar-divider"></div>
+        <span class="topbar-item" style="display: none; @media(min-width: 600px){display:inline-flex;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          256-Bit Encrypted Airside Protocol
+        </span>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-item" style="color: #ffffff; font-weight: 700;">USD ($) / Global Currency Tier</span>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="logo">
+        <span class="logo-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        </span>
+        VELOCE
+      </a>
+
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+        <li class="nav-item"><a href="index.html#services" class="nav-link">Services</a></li>
+        <li class="nav-item"><a href="cars.html" class="nav-link">Our Fleets</a></li>
+        <li class="nav-item"><a href="index.html#how-it-works" class="nav-link">How It Works</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="cars.html" class="btn btn-secondary">Change Vehicle</a>
+        <a href="#checkoutSubmitBtn" class="btn btn-primary">Complete Reservation</a>
+      </div>
+
+      <button class="hamburger-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer-overlay" id="drawerOverlay"></div>
+  <aside class="mobile-drawer" id="mobileDrawer">
+    <div class="mobile-drawer-header">
+      <a href="index.html" class="logo" style="font-size: 20px;">
+        <span class="logo-badge" style="width: 32px; height: 32px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        </span>
+        VELOCE
+      </a>
+    </div>
+
+    <ul class="mobile-nav-list">
+      <li class="mobile-nav-item"><a href="index.html" class="mobile-nav-link close-drawer">Home</a></li>
+      <li class="mobile-nav-item"><a href="about.html" class="mobile-nav-link close-drawer">About Us</a></li>
+      <li class="mobile-nav-item"><a href="index.html#services" class="mobile-nav-link close-drawer">Services</a></li>
+      <li class="mobile-nav-item"><a href="cars.html" class="mobile-nav-link close-drawer">Our Fleets</a></li>
+      <li class="mobile-nav-item"><a href="index.html#how-it-works" class="mobile-nav-link close-drawer">How It Works</a></li>
+      <li class="mobile-nav-item"><a href="contact.html" class="mobile-nav-link close-drawer">Contact</a></li>
+    </ul>
+
+    <div class="mobile-drawer-actions">
+      <a href="#checkoutSubmitBtn" class="btn btn-primary close-drawer" style="width: 100%;">Complete Reservation</a>
+      <a href="tel:+18004567890" class="btn btn-secondary" style="width: 100%;">Call Operations</a>
+    </div>
+  </aside>
+
+  <!-- Mobile Fixed Bottom Action Bar -->
+  <div class="mobile-bottom-bar">
+    <a href="tel:+18004567890" class="btn btn-secondary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      Call
+    </a>
+    <a href="#checkoutSubmitBtn" class="btn btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      Authorize ($567)
+    </a>
+  </div>
+
+  <!-- =========================================================
+       3. CHECKOUT HEADER & PROGRESS INDICATOR
+  ========================================================= -->
+  <section class="checkout-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <a href="cars.html">Fleet Collection</a>
+        <span>/</span>
+        <span style="color: var(--carbon-950);">Airside Dispatch Authorization</span>
+      </div>
+
+      <div class="checkout-header-flex">
+        <div>
+          <h1>Airside Dispatch Authorization</h1>
+          <p>Verify driver credentials, specify hangar access details, and lock your vehicle token.</p>
+        </div>
+
+        <div class="steps-tracker">
+          <div class="step-pill completed">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            01 Chassis
+          </div>
+          <div class="step-divider"></div>
+          <div class="step-pill active">02 Dispatch Credentials</div>
+          <div class="step-divider"></div>
+          <div class="step-pill">03 NFC Key</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       4. CHECKOUT TWO-COLUMN SPLIT
+  ========================================================= -->
+  <div class="container">
+    <div class="checkout-layout">
+
+      <!-- LEFT COLUMN: DRIVER CREDENTIALS, AIRSIDE DETAILS & PAYMENT -->
+      <div class="checkout-forms-column">
+        <form id="checkoutAuthorizationForm">
+
+          <!-- Module 1: Primary Driver & KYC Details -->
+          <div class="form-module-card">
+            <h3 class="module-title">
+              <span class="module-badge-num">1</span>
+              Primary Driver & Credentials
+            </h3>
+            <p class="module-subtitle">Driver must be 21+ with a valid license held for at least one year.</p>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="driverFirstName">First Name</label>
+                <div class="input-shell">
+                  <input type="text" class="input-control" id="driverFirstName" value="Alexander" required>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="driverLastName">Last Name</label>
+                <div class="input-shell">
+                  <input type="text" class="input-control" id="driverLastName" value="Vance" required>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="driverEmail">Email Address (Key Pass Delivery)</label>
+                <div class="input-shell">
+                  <input type="email" class="input-control" id="driverEmail" value="vance@familyoffice.com" required>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="driverPhone">Mobile Phone (SMS Protocol)</label>
+                <div class="input-shell">
+                  <input type="tel" class="input-control" id="driverPhone" value="+1 (555) 382-9901" required>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="driverLicenseNumber">Driver's License Number</label>
+                <div class="input-shell">
+                  <input type="text" class="input-control" id="driverLicenseNumber" placeholder="DL-XXXX-XXXX-XX" required>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="driverLicenseCountry">Country / Jurisdiction</label>
+                <div class="input-shell">
+                  <select class="input-control" id="driverLicenseCountry">
+                    <option>United States (All 50 States)</option>
+                    <option>United Kingdom (DVLA)</option>
+                    <option>European Union</option>
+                    <option>Switzerland</option>
+                    <option>Canada</option>
+                    <option>United Arab Emirates</option>
+                  </select>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 2: Airside & FBO Delivery Synchronization -->
+          <div class="form-module-card">
+            <h3 class="module-title">
+              <span class="module-badge-num">2</span>
+              FBO Airside Staging Parameters
+            </h3>
+            <p class="module-subtitle">Provide flight details for ramp delivery or select private terminal valet.</p>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="fboLocation">Pick-Up Terminal / Hangar</label>
+                <div class="input-shell">
+                  <select class="input-control" id="fboLocation">
+                    <option>JFK Signature Aviation FBO (Bay 04)</option>
+                    <option>Manhattan Midtown Executive Pad (Lexington)</option>
+                    <option>Silicon Valley Atlantic Aviation (SJC)</option>
+                    <option>Miami Opa-Locka Executive Hub (OPF)</option>
+                  </select>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="flightTailNumber">Flight Tail / Flight Number (Optional)</label>
+                <div class="input-shell">
+                  <input type="text" class="input-control" id="flightTailNumber" placeholder="e.g. N782VX or BA178">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+              </div>
+
+              <div class="form-group col-span-full">
+                <label for="customDeliveryNotes">Handover Logistics & Flight Coordinator Notes</label>
+                <div class="input-shell">
+                  <input type="text" class="input-control" id="customDeliveryNotes" placeholder="e.g. Please pre-cool cabin to 68°F; luggage transfer required.">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 3: Payment Authorization -->
+          <div class="form-module-card">
+            <h3 class="module-title">
+              <span class="module-badge-num">3</span>
+              Secure Payment Method
+            </h3>
+            <p class="module-subtitle">Zero security deposit hold for pre-verified members. Standard pre-authorization releases upon safe return.</p>
+
+            <!-- Holographic Card Visual Preview -->
+            <div class="card-preview-stage" id="cardPreviewBox">
+              <div class="card-top-row">
+                <div class="card-chip"></div>
+                <div class="card-brand-name">VELOCE TITANIUM</div>
+              </div>
+              <div class="card-number-display" id="cardNumPreview">&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; 8821</div>
+              <div class="card-bottom-row">
+                <div>
+                  <div class="card-holder-label">Cardholder</div>
+                  <div class="card-holder-val" id="cardHolderPreview">Alexander Vance</div>
+                </div>
+                <div>
+                  <div class="card-holder-label">Expires</div>
+                  <div class="card-expiry-val" id="cardExpiryPreview">08/28</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Payment Method Tabs -->
+            <div class="payment-tab-row">
+              <div class="payment-tab active" data-method="card">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                Credit / Corporate Card
+              </div>
+              <div class="payment-tab" data-method="apple">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 1.22 0 2.38-1.06 3.88-1.06 1.44 0 2.5 1.06 3.62 1.06-2.5-3-2.5-6.5 0-9.5-1.5 0-3 1-4.5 1-1.5 0-2.5-1-4-1-2.22 0-4.5 2-4.5 6 0 4.5 2.5 8.5 5.5 8.5z"></path></svg>
+                Apple Pay / Google Pay
+              </div>
+              <div class="payment-tab" data-method="wire">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                Corporate Wire / Account
+              </div>
+            </div>
+
+            <!-- Card Fields -->
+            <div class="form-grid" id="creditCardFields">
+              <div class="form-group col-span-full">
+                <label for="cardNumber">Card Number</label>
+                <div class="input-shell">
+                  <input type="text" class="input-control" id="cardNumber" placeholder="4532 8821 9902 8821" maxlength="19" required>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="cardExpiry">Expiration (MM/YY)</label>
+                <div class="input-shell">
+                  <input type="text" class="input-control" id="cardExpiry" placeholder="08/28" maxlength="5" required>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="cardCvc">CVC / Security Code</label>
+                <div class="input-shell">
+                  <input type="text" class="input-control" id="cardCvc" placeholder="CVC" maxlength="4" required>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="security-notice-pill">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <span>Card token encrypted via bank-grade PCI-DSS Level 1 protocol. Instant cancellation free within 24 hours.</span>
+            </div>
+          </div>
+
+          <!-- Final Submit Button -->
+          <button type="submit" class="btn btn-primary" id="checkoutSubmitBtn" style="width: 100%; height: 52px; font-size: 14.5px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Authorize Reservation & Issue NFC Pass ($567.00)
+          </button>
+        </form>
+
+        <!-- Inline Confirmation Banner (Zero Popups) -->
+        <div class="checkout-success-banner" id="checkoutSuccess">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-inline: auto; margin-bottom: 6px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <div style="font-size: 16px;">Reservation #VEL-992-AUTH Confirmed</div>
+          <div style="font-size: 12.5px; font-weight: 500; color: var(--carbon-800); margin-top: 4px;">
+            Digital NFC Smartphone Pass has been transmitted to your email and Apple/Google Wallet. Your chassis is pre-allocated and verified.
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: BOARDING PASS MANIFEST DOSSIER -->
+      <div class="checkout-summary-column">
+        <aside class="itinerary-card">
+          <div class="itinerary-header">
+            <h3>Dispatch Manifest</h3>
+            <span class="manifest-badge">PASS #992-GT3</span>
+          </div>
+
+          <!-- Vehicle Thumbnail Summary -->
+          <div class="vehicle-mini-summary">
+            <div class="mini-thumb-wrap">
+              <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=300&q=80" alt="Veloce GT3 Coupé">
+            </div>
+            <div class="mini-info">
+              <h4>Veloce GT3 Coupé</h4>
+              <span>Twin-Turbo Flat-6 &bull; PDK Dual-Clutch</span>
+              <div class="mini-vin">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                VIN #VEL-992-GT3G Guaranteed
+              </div>
+            </div>
+          </div>
+
+          <!-- Boarding Pass Route Block -->
+          <div class="flight-route-block">
+            <div class="route-node-row">
+              <div class="route-node">
+                <strong>JFK</strong>
+                <span>Departure Bay</span>
+              </div>
+              <div class="route-plane-indicator">
+                <div class="route-plane-line"></div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3.5c-.5-.5-2.5 0-4 1.5L13.5 8.5 5.3 6.7c-.8-.2-1.6.2-2 1-.4.8-.1 1.7.5 2.2l4.8 3.6-2.5 2.5-2.3-.5c-.4-.1-.8.1-1.1.4l-.9.9 3.2 1.4 1.4 3.2.9-.9c.3-.3.5-.7.4-1.1l-.5-2.3 2.5-2.5 3.6 4.8c.5.6 1.4.9 2.2.5.8-.4 1.2-1.2 1-2z"></path></svg>
+                <div class="route-plane-line"></div>
+              </div>
+              <div class="route-node" style="text-align: right;">
+                <strong>JFK</strong>
+                <span>Return Bay</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Itinerary Parameters -->
+          <ul class="itinerary-details-list">
+            <li class="itinerary-detail-row">
+              <span class="row-label">Handover Window:</span>
+              <span class="row-val">Oct 12, 2026 (10:00 AM)</span>
+            </li>
+            <li class="itinerary-detail-row">
+              <span class="row-label">Return Window:</span>
+              <span class="row-val">Oct 15, 2026 (10:00 AM)</span>
+            </li>
+            <li class="itinerary-detail-row">
+              <span class="row-label">Journey Duration:</span>
+              <span class="row-val">3 Consecutive Days</span>
+            </li>
+            <li class="itinerary-detail-row">
+              <span class="row-label">Digital Key Access:</span>
+              <span class="row-val" style="color: var(--accent-green);">Instant NFC Push</span>
+            </li>
+          </ul>
+
+          <!-- Rate Breakdown -->
+          <div class="billing-breakdown">
+            <div class="bill-row">
+              <span>Daily Rate ($189.00 &times; 3 Days):</span>
+              <strong style="color: var(--carbon-950);">$567.00</strong>
+            </div>
+            <div class="bill-row">
+              <span>FBO Airside Staging Fee:</span>
+              <span style="color: var(--accent-green); font-weight: 700;">$0.00 (Waived)</span>
+            </div>
+            <div class="bill-row">
+              <span>Zero-Excess Comprehensive Protection:</span>
+              <span style="color: var(--accent-green); font-weight: 700;">$0.00 (Included)</span>
+            </div>
+            <div class="bill-row">
+              <span>Security Deposit Hold:</span>
+              <span style="color: var(--carbon-950); font-weight: 700;">$0.00 (Pre-Verified)</span>
+            </div>
+            <div class="bill-row total-row">
+              <span>Total Estimated (Tax Inc.):</span>
+              <span class="bill-total-fig">$567.00</span>
+            </div>
+          </div>
+
+          <!-- Included privileges list -->
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5; border-top: 1px solid var(--line-subtle); padding-top: 14px;">
+            &bull; Smartphone NFC Bluetooth unlock enabled immediately upon completion.<br>
+            &bull; Free cancellation up to 24 hours prior to scheduled departure window.
+          </div>
+        </aside>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================
+       5. FOOTER (EDITORIAL 4-COLUMN)
+  ========================================================= -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <a href="index.html" class="footer-logo">
+          <span class="logo-badge" style="width: 32px; height: 32px; font-size: 15px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </span>
+          VELOCE
+        </a>
+        <p class="footer-desc">
+          Crafting exceptional rental journeys across North America and Europe. Instant roadside lock, zero excess options, and elite concierge support.
+        </p>
+        <div class="social-links">
+          <a href="#" class="social-btn" aria-label="Twitter">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="LinkedIn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="Instagram">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Vehicles & Fleet</h4>
+        <ul class="footer-links">
+          <li><a href="cars.html">Sports Cars & Coupes</a></li>
+          <li><a href="cars.html">Electric Fleet (EV)</a></li>
+          <li><a href="cars.html">Luxury Executive SUVs</a></li>
+          <li><a href="index.html#services">Chauffeur Service</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support & Policy</h4>
+        <ul class="footer-links">
+          <li><a href="about.html">Rental Guidelines</a></li>
+          <li><a href="index.html#how-it-works">Comprehensive Cover</a></li>
+          <li><a href="index.html#faq">Charging Policy</a></li>
+          <li><a href="index.html#faq">Help Center & FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- 4th Column: Office & Concierge Hub -->
+      <div class="footer-col">
+        <h4>Headquarters & Concierge</h4>
+        <p class="footer-desc" style="margin-bottom: 14px;">Direct line to client operations and private airside logistics.</p>
+        <ul class="footer-contact-list">
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>750 Lexington Ave, 24th Fl, New York, NY 10022</span>
+          </li>
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <a href="tel:+18004567890">+1 (800) 456-7890</a>
+          </li>
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <a href="mailto:concierge@velocefleet.com">concierge@velocefleet.com</a>
+          </li>
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>Mon - Sun: 24/7 Priority Dispatch</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div>&copy; 2026 Veloce Fleet Technologies Inc. All rights reserved.</div>
+        <div class="footer-legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Security Protocol</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       6. INTERACTION LOGIC (LIVE CARD MIRROR & FORM DISPATCH)
+  ========================================================= -->
+  <script>
+    // 1. Mobile Drawer Navigation
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+    const closeDrawerLinks = document.querySelectorAll('.close-drawer');
+
+    function toggleMobileDrawer(open) {
+      if (open) {
+        mobileDrawer.classList.add('open');
+        drawerOverlay.classList.add('open');
+        mobileMenuBtn.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileDrawer.classList.remove('open');
+        drawerOverlay.classList.remove('open');
+        mobileMenuBtn.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    mobileMenuBtn.addEventListener('click', () => {
+      const isOpen = mobileDrawer.classList.contains('open');
+      toggleMobileDrawer(!isOpen);
+    });
+
+    drawerOverlay.addEventListener('click', () => toggleMobileDrawer(false));
+    closeDrawerLinks.forEach(link => {
+      link.addEventListener('click', () => toggleMobileDrawer(false));
+    });
+
+    // 2. Real-Time Credit Card Visual Mirroring
+    const cardNumberInput = document.getElementById('cardNumber');
+    const cardExpiryInput = document.getElementById('cardExpiry');
+    const firstNameInput = document.getElementById('driverFirstName');
+    const lastNameInput = document.getElementById('driverLastName');
+
+    const cardNumPreview = document.getElementById('cardNumPreview');
+    const cardHolderPreview = document.getElementById('cardHolderPreview');
+    const cardExpiryPreview = document.getElementById('cardExpiryPreview');
+
+    // Card Number Formatter
+    cardNumberInput.addEventListener('input', (e) => {
+      let val = e.target.value.replace(/\D/g, '');
+      let formatted = val.match(/.{1,4}/g)?.join(' ') || '';
+      e.target.value = formatted;
+      cardNumPreview.textContent = formatted || '•••• •••• •••• 8821';
+    });
+
+    // Expiry Formatter
+    cardExpiryInput.addEventListener('input', (e) => {
+      let val = e.target.value.replace(/\D/g, '');
+      if (val.length >= 2) {
+        val = val.substring(0, 2) + '/' + val.substring(2, 4);
+      }
+      e.target.value = val;
+      cardExpiryPreview.textContent = val || '08/28';
+    });
+
+    // Name Mirror
+    function updateCardHolderName() {
+      const full = `${firstNameInput.value.trim()} ${lastNameInput.value.trim()}`.trim();
+      cardHolderPreview.textContent = full || 'Alexander Vance';
+    }
+    firstNameInput.addEventListener('input', updateCardHolderName);
+    lastNameInput.addEventListener('input', updateCardHolderName);
+
+    // 3. Payment Method Tabs Switching
+    const paymentTabs = document.querySelectorAll('.payment-tab');
+    const creditCardFields = document.getElementById('creditCardFields');
+    const cardPreviewBox = document.getElementById('cardPreviewBox');
+
+    paymentTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        paymentTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const method = tab.getAttribute('data-method');
+        if (method === 'card') {
+          creditCardFields.style.display = 'grid';
+          cardPreviewBox.style.display = 'block';
+        } else {
+          creditCardFields.style.display = 'none';
+          cardPreviewBox.style.display = 'none';
+        }
+      });
+    });
+
+    // 4. Form Submission Simulation (Zero Popups)
+    const checkoutForm = document.getElementById('checkoutAuthorizationForm');
+    const successBanner = document.getElementById('checkoutSuccess');
+
+    checkoutForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      successBanner.classList.add('show');
+      successBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  </script>
+</body>
+</html>

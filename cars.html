@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>All Cars Catalog | Veloce Prestige Fleet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. DESIGN TOKENS & SYSTEM VARIABLES (LIGHT LUXURY)
+       ========================================================================== */
+    :root {
+      --gold-primary: #b88e1e;
+      --gold-hover: #9c7713;
+      --gold-light: #fef9e8;
+      --gold-border: rgba(184, 142, 30, 0.28);
+      --gold-glow: rgba(184, 142, 30, 0.18);
+
+      --carbon-950: #0a0d14;
+      --carbon-900: #111520;
+      --carbon-800: #1b202e;
+      --carbon-700: #2d3548;
+
+      --text-main: #0c0f17;
+      --text-muted: #525a6c;
+      --text-subtle: #8a94a6;
+
+      --surface-body: #f8f9fb;
+      --surface-card: #ffffff;
+      --surface-card-subtle: #f1f3f7;
+
+      --line-subtle: rgba(12, 15, 23, 0.08);
+      --line-medium: rgba(12, 15, 23, 0.12);
+
+      --accent-green: #0d9488;
+      --warning-gold: #d97706;
+
+      --font-display: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+      --radius-xs: 6px;
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+
+      --shadow-ambient: 0 4px 20px -2px rgba(12, 15, 23, 0.04), 0 1px 3px rgba(12, 15, 23, 0.02);
+      --shadow-elevated: 0 16px 36px -8px rgba(12, 15, 23, 0.08), 0 4px 12px -2px rgba(12, 15, 23, 0.03);
+      --shadow-floating: 0 24px 50px -12px rgba(12, 15, 23, 0.12), 0 0 0 1px rgba(12, 15, 23, 0.05);
+
+      --ease-luxury: cubic-bezier(0.19, 1, 0.22, 1);
+      --transition-fast: 0.22s var(--ease-luxury);
+      --transition-base: 0.35s var(--ease-luxury);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--surface-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      padding-bottom: calc(74px + env(safe-area-inset-bottom));
+      background-image: 
+        radial-gradient(1200px 500px at 100% 0%, rgba(184, 142, 30, 0.04) 0%, transparent 70%),
+        radial-gradient(900px 400px at 0% 40%, rgba(13, 148, 136, 0.03) 0%, transparent 60%);
+      background-attachment: fixed;
+    }
+
+    @media (min-width: 992px) {
+      body { padding-bottom: 0; }
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    svg {
+      display: inline-block;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin-inline: auto;
+      padding-inline: clamp(20px, 4vw, 32px);
+    }
+
+    /* BUTTONS */
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition-base);
+      border: 1px solid transparent;
+      outline: none;
+      min-height: 46px;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--carbon-950);
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(10, 13, 20, 0.22);
+    }
+    .btn-primary:hover {
+      background: var(--carbon-800);
+      box-shadow: 0 8px 24px rgba(10, 13, 20, 0.28);
+      transform: translateY(-2px);
+      color: #ffffff;
+    }
+
+    .btn-secondary {
+      background: var(--surface-card);
+      color: var(--carbon-900);
+      border-color: var(--line-medium);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+    .btn-secondary:hover {
+      background: var(--surface-card-subtle);
+      border-color: rgba(12, 15, 23, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* =========================================================
+       2. TOPBAR & NAVIGATION
+    ========================================================= */
+    .topbar {
+      background: var(--carbon-950);
+      color: var(--text-subtle);
+      font-size: 12px;
+      font-weight: 500;
+      padding-block: 9px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .topbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .topbar-left, .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .topbar-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #9ba4b5;
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .topbar-item:hover { color: #ffffff; }
+    .topbar-divider { width: 1px; height: 12px; background: rgba(255, 255, 255, 0.15); }
+
+    header {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--line-subtle);
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 78px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      text-decoration: none;
+      letter-spacing: -0.03em;
+    }
+    .logo-badge {
+      background: var(--carbon-950);
+      color: var(--gold-primary);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(184, 142, 30, 0.35);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .nav-menu {
+      display: none;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+    @media (min-width: 992px) {
+      .nav-menu { display: flex; }
+    }
+    .nav-link {
+      font-weight: 600;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding-block: 10px;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--carbon-950); }
+
+    .nav-actions { display: none; align-items: center; gap: 12px; }
+    @media (min-width: 992px) {
+      .nav-actions { display: flex; }
+    }
+
+    .hamburger-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      background: transparent;
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      padding: 8px;
+    }
+    .hamburger-btn span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background-color: var(--carbon-950);
+      border-radius: var(--radius-full);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .hamburger-btn.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-btn.active span:nth-child(2) { opacity: 0; }
+    .hamburger-btn.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (min-width: 992px) {
+      .hamburger-btn { display: none; }
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 13, 20, 0.45);
+      backdrop-filter: blur(6px);
+      z-index: 1050;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition-fast);
+    }
+    .mobile-drawer-overlay.open { opacity: 1; visibility: visible; }
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 86%;
+      max-width: 330px;
+      height: 100%;
+      background: var(--surface-card);
+      z-index: 1060;
+      box-shadow: -15px 0 35px rgba(0, 0, 0, 0.08);
+      transform: translateX(100%);
+      transition: transform var(--transition-base);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 24px 22px 90px;
+    }
+    .mobile-drawer.open { transform: translateX(0); }
+    .mobile-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line-subtle);
+    }
+    .mobile-nav-list { list-style: none; display: flex; flex-direction: column; }
+    .mobile-nav-item { border-bottom: 1px solid var(--surface-card-subtle); }
+    .mobile-nav-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 4px;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--carbon-950);
+      text-decoration: none;
+    }
+
+    /* Mobile Bottom Action Bar */
+    .mobile-bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--line-medium);
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      display: flex;
+      gap: 10px;
+      z-index: 990;
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+    }
+    @media (min-width: 992px) {
+      .mobile-bottom-bar { display: none; }
+    }
+    .mobile-bottom-bar .btn { flex: 1; min-height: 44px; padding: 8px 12px; font-size: 13.5px; }
+
+    /* =========================================================
+       3. PAGE HEADER & BREADCRUMB
+    ========================================================= */
+    .catalog-header {
+      padding-top: clamp(32px, 5vw, 54px);
+      padding-bottom: clamp(24px, 4vw, 36px);
+      border-bottom: 1px solid var(--line-subtle);
+      background: var(--surface-card);
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-subtle);
+      margin-bottom: 12px;
+    }
+    .breadcrumb a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .breadcrumb a:hover { color: var(--carbon-950); }
+    .catalog-header-flex {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    @media (min-width: 768px) {
+      .catalog-header-flex {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+    }
+    .catalog-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      color: var(--carbon-950);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .catalog-header p {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* =========================================================
+       4. CATALOG LAYOUT: LEFT SIDEBAR + GRID
+    ========================================================= */
+    .catalog-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding-block: clamp(32px, 5vw, 60px);
+    }
+    @media (min-width: 992px) {
+      .catalog-layout {
+        grid-template-columns: 310px 1fr;
+        gap: 40px;
+        align-items: start;
+      }
+    }
+
+    /* LEFT SIDEBAR STYLING */
+    .catalog-sidebar {
+      background: var(--surface-card);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-md);
+      padding: 26px 22px;
+      box-shadow: var(--shadow-ambient);
+      position: sticky;
+      top: 98px;
+    }
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--line-subtle);
+    }
+    .sidebar-header h3 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .reset-btn {
+      background: transparent;
+      border: none;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold-primary);
+      cursor: pointer;
+      padding: 4px;
+      transition: color var(--transition-fast);
+    }
+    .reset-btn:hover { color: var(--gold-hover); text-decoration: underline; }
+
+    .filter-group {
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line-subtle);
+    }
+    .filter-group:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    .filter-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--carbon-900);
+      margin-bottom: 12px;
+    }
+
+    /* Keyword Input */
+    .search-input-shell {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-input-shell svg {
+      position: absolute;
+      left: 14px;
+      color: var(--text-subtle);
+      pointer-events: none;
+    }
+    .sidebar-input {
+      width: 100%;
+      height: 44px;
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-sm);
+      padding-left: 40px;
+      padding-right: 14px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--carbon-950);
+      background: var(--surface-card-subtle);
+      outline: none;
+      transition: var(--transition-fast);
+    }
+    .sidebar-input:focus {
+      border-color: var(--carbon-950);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(12, 15, 23, 0.08);
+    }
+
+    /* Radio / Checkbox Pill Stack */
+    .filter-options-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .filter-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--carbon-800);
+      padding: 6px 4px;
+      border-radius: var(--radius-xs);
+      transition: color var(--transition-fast);
+      user-select: none;
+    }
+    .filter-option:hover { color: var(--carbon-950); }
+    .filter-option input {
+      accent-color: var(--carbon-950);
+      width: 16px;
+      height: 16px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .filter-option-label {
+      display: inline-flex;
+      align-items: center;
+    }
+    .filter-count {
+      font-size: 11.5px;
+      color: var(--text-subtle);
+      font-weight: 600;
+    }
+
+    /* Price Range Slider */
+    .range-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .range-slider {
+      width: 100%;
+      height: 6px;
+      border-radius: var(--radius-full);
+      background: var(--line-medium);
+      outline: none;
+      accent-color: var(--carbon-950);
+      cursor: pointer;
+    }
+    .range-readout {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .range-readout strong {
+      color: var(--carbon-950);
+      font-family: var(--font-display);
+      font-size: 14px;
+    }
+
+    /* CATALOG MAIN AREA */
+    .catalog-main {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Top Control Bar (Counter + Sort) */
+    .catalog-controls-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: var(--surface-card);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      box-shadow: var(--shadow-ambient);
+    }
+    @media (min-width: 640px) {
+      .catalog-controls-bar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+    .results-count {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--carbon-900);
+    }
+    .results-count span { color: var(--gold-primary); }
+
+    .sort-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sort-wrap label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .sort-select {
+      height: 38px;
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-sm);
+      padding-inline: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--carbon-950);
+      background: var(--surface-card-subtle);
+      outline: none;
+      cursor: pointer;
+    }
+    .sort-select:focus { border-color: var(--carbon-950); }
+
+    /* FLEET GRID */
+    .fleet-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 640px) {
+      .fleet-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1200px) {
+      .fleet-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .car-box {
+      background: var(--surface-card);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line-medium);
+      overflow: hidden;
+      box-shadow: var(--shadow-ambient);
+      transition: var(--transition-base);
+      display: flex;
+      flex-direction: column;
+    }
+    .car-box:hover {
+      box-shadow: var(--shadow-floating);
+      border-color: rgba(12, 15, 23, 0.35);
+      transform: translateY(-5px);
+    }
+    .car-thumb {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      background: var(--carbon-950);
+    }
+    .car-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease-luxury);
+    }
+    .car-box:hover .car-thumb img {
+      transform: scale(1.06);
+    }
+    .badge-category {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(10, 13, 20, 0.88);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      letter-spacing: 0.05em;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .rating-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #ffffff;
+      color: var(--carbon-950);
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-xs);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+    .rating-badge svg { color: var(--warning-gold); }
+    .car-details {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .car-title-row h3 { font-size: 18px; font-weight: 800; color: var(--carbon-950); }
+    .car-sub { font-size: 12px; color: var(--text-muted); margin: 4px 0 14px; }
+    .car-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: var(--surface-card-subtle);
+      padding: 10px 8px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 18px;
+      border: 1px solid var(--line-subtle);
+    }
+    .spec-node {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .spec-node-label {
+      font-size: 9.5px;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .spec-node strong { font-size: 12px; color: var(--carbon-900); font-weight: 700; display: block; }
+    .car-meta-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--line-subtle);
+    }
+    .rate strong { font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--carbon-950); line-height: 1; }
+    .rate span { font-size: 10.5px; color: var(--text-subtle); display: block; margin-top: 2px; font-weight: 500; }
+
+    /* Empty state */
+    .empty-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      text-align: center;
+      background: var(--surface-card);
+      border: 1px dashed var(--line-medium);
+      border-radius: var(--radius-md);
+      grid-column: 1 / -1;
+    }
+    .empty-state.show { display: flex; }
+    .empty-state svg { color: var(--text-subtle); margin-bottom: 14px; }
+    .empty-state h4 { font-family: var(--font-display); font-size: 18px; font-weight: 800; color: var(--carbon-950); margin-bottom: 6px; }
+    .empty-state p { font-size: 13.5px; color: var(--text-muted); max-width: 360px; margin-bottom: 18px; }
+
+    /* =========================================================
+       5. FOOTER
+    ========================================================= */
+    footer {
+      background: var(--carbon-950);
+      color: #9ba4b5;
+      padding-top: 60px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 36px;
+      margin-bottom: 40px;
+    }
+    @media (min-width: 576px) {
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 992px) {
+      .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1.3fr; gap: 40px; }
+    }
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+      text-decoration: none;
+      margin-bottom: 12px;
+    }
+    .footer-desc { font-size: 13.5px; line-height: 1.6; margin-bottom: 18px; color: #9ba4b5; }
+    .social-links { display: flex; gap: 10px; }
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: var(--transition-fast);
+    }
+    .social-btn:hover {
+      background: var(--gold-primary);
+      color: #ffffff;
+      border-color: var(--gold-primary);
+    }
+    .footer-col h4 {
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      color: #9ba4b5;
+      text-decoration: none;
+      font-size: 13.5px;
+      transition: color var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-links a:hover { color: #ffffff; }
+
+    .footer-contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13.5px;
+      color: #9ba4b5;
+    }
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .footer-contact-item svg {
+      color: var(--gold-primary);
+      margin-top: 3px;
+    }
+    .footer-contact-item a {
+      color: #9ba4b5;
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .footer-contact-item a:hover { color: #ffffff; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 20px 0;
+      font-size: 12.5px;
+      color: var(--text-subtle);
+    }
+    .footer-bottom .container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .footer-bottom .container {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+    .footer-legal-links { display: flex; justify-content: center; gap: 16px; }
+    .footer-legal-links a { color: var(--text-subtle); text-decoration: none; transition: color var(--transition-fast); }
+    .footer-legal-links a:hover { color: #ffffff; }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================
+       1. TOPBAR & AIRSIDE NAVBAR
+  ========================================================= -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <a href="tel:+18004567890" class="topbar-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          Direct Concierge Line: +1 (800) 456-7890
+        </a>
+        <div class="topbar-divider"></div>
+        <span class="topbar-item" style="display: none; @media(min-width: 600px){display:inline-flex;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Guaranteed VIN Reservation Protocol
+        </span>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-item" style="color: #ffffff; font-weight: 700;">USD ($) / Global Currency Tier</span>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="logo">
+        <span class="logo-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        </span>
+        VELOCE
+      </a>
+
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+        <li class="nav-item"><a href="index.html#services" class="nav-link">Services</a></li>
+        <li class="nav-item"><a href="cars.html" class="nav-link active">Our Fleets</a></li>
+        <li class="nav-item"><a href="index.html#how-it-works" class="nav-link">How It Works</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="contact.html" class="btn btn-secondary">Inquire Concierge</a>
+        <a href="index.html#home" class="btn btn-primary">Reserve Fleet</a>
+      </div>
+
+      <button class="hamburger-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer-overlay" id="drawerOverlay"></div>
+  <aside class="mobile-drawer" id="mobileDrawer">
+    <div class="mobile-drawer-header">
+      <a href="index.html" class="logo" style="font-size: 20px;">
+        <span class="logo-badge" style="width: 32px; height: 32px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        </span>
+        VELOCE
+      </a>
+    </div>
+
+    <ul class="mobile-nav-list">
+      <li class="mobile-nav-item"><a href="index.html" class="mobile-nav-link close-drawer">Home</a></li>
+      <li class="mobile-nav-item"><a href="about.html" class="mobile-nav-link close-drawer">About Us</a></li>
+      <li class="mobile-nav-item"><a href="index.html#services" class="mobile-nav-link close-drawer">Services</a></li>
+      <li class="mobile-nav-item"><a href="cars.html" class="mobile-nav-link close-drawer" style="color: var(--gold-primary);">Our Fleets</a></li>
+      <li class="mobile-nav-item"><a href="index.html#how-it-works" class="mobile-nav-link close-drawer">How It Works</a></li>
+      <li class="mobile-nav-item"><a href="contact.html" class="mobile-nav-link close-drawer">Contact</a></li>
+    </ul>
+
+    <div class="mobile-drawer-actions">
+      <a href="index.html#home" class="btn btn-primary close-drawer" style="width: 100%;">Book a Ride</a>
+      <a href="tel:+18004567890" class="btn btn-secondary" style="width: 100%;">Call Operations</a>
+    </div>
+  </aside>
+
+  <!-- Mobile Fixed Bottom Action Bar -->
+  <div class="mobile-bottom-bar">
+    <a href="tel:+18004567890" class="btn btn-secondary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      Call
+    </a>
+    <a href="#fleetGrid" class="btn btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+      View Fleet
+    </a>
+  </div>
+
+  <!-- =========================================================
+       3. CATALOG HEADER WITH BREADCRUMB
+  ========================================================= -->
+  <section class="catalog-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span style="color: var(--carbon-950);">Fleet Collection</span>
+      </div>
+      <div class="catalog-header-flex">
+        <div>
+          <h1>All Prestige Vehicles</h1>
+          <p>Factory-calibrated supercars, electric flagships, and luxury touring SUVs available for immediate dispatch.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       4. MAIN CATALOG: LEFT SIDEBAR SEARCH + FLEET GRID
+  ========================================================= -->
+  <div class="container">
+    <div class="catalog-layout">
+      
+      <!-- LEFT SIDEBAR SEARCH & FILTERS -->
+      <aside class="catalog-sidebar">
+        <div class="sidebar-header">
+          <h3>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+            Filter Fleet
+          </h3>
+          <button class="reset-btn" id="resetFiltersBtn">Reset All</button>
+        </div>
+
+        <!-- 1. Keyword Search -->
+        <div class="filter-group">
+          <label class="filter-label" for="keywordSearch">Search Chassis</label>
+          <div class="search-input-shell">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" class="sidebar-input" id="keywordSearch" placeholder="Model, engine, or spec...">
+          </div>
+        </div>
+
+        <!-- 2. Vehicle Category Filter -->
+        <div class="filter-group">
+          <div class="filter-label">Vehicle Category</div>
+          <div class="filter-options-stack">
+            <label class="filter-option">
+              <span class="filter-option-label">
+                <input type="radio" name="categoryFilter" value="all" checked>
+                All Categories
+              </span>
+              <span class="filter-count">(6)</span>
+            </label>
+            <label class="filter-option">
+              <span class="filter-option-label">
+                <input type="radio" name="categoryFilter" value="Sports GT">
+                Sports GT
+              </span>
+              <span class="filter-count">(2)</span>
+            </label>
+            <label class="filter-option">
+              <span class="filter-option-label">
+                <input type="radio" name="categoryFilter" value="Electric Flagship">
+                Electric Flagships
+              </span>
+              <span class="filter-count">(2)</span>
+            </label>
+            <label class="filter-option">
+              <span class="filter-option-label">
+                <input type="radio" name="categoryFilter" value="Luxury SUV">
+                Luxury SUV
+              </span>
+              <span class="filter-count">(1)</span>
+            </label>
+            <label class="filter-option">
+              <span class="filter-option-label">
+                <input type="radio" name="categoryFilter" value="Track Ready">
+                Track Editions
+              </span>
+              <span class="filter-count">(1)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 3. Maximum Price Per Day -->
+        <div class="filter-group">
+          <div class="filter-label">
+            <span>Max Daily Rate</span>
+            <span id="priceReadout" style="color: var(--gold-primary); font-weight: 800;">$210</span>
+          </div>
+          <div class="range-wrap">
+            <input type="range" class="range-slider" id="priceRange" min="140" max="210" step="5" value="210">
+            <div class="range-readout">
+              <span>$140</span>
+              <strong>$210 / day</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Transmission / Drivetrain -->
+        <div class="filter-group">
+          <div class="filter-label">Drivetrain & Power</div>
+          <div class="filter-options-stack">
+            <label class="filter-option">
+              <span class="filter-option-label">
+                <input type="checkbox" class="drive-filter" value="AWD">
+                All-Wheel Drive (AWD)
+              </span>
+            </label>
+            <label class="filter-option">
+              <span class="filter-option-label">
+                <input type="checkbox" class="drive-filter" value="RWD">
+                Rear-Wheel Drive (RWD)
+              </span>
+            </label>
+            <label class="filter-option">
+              <span class="filter-option-label">
+                <input type="checkbox" class="drive-filter" value="EV">
+                Pure Electric (EV)
+              </span>
+            </label>
+          </div>
+        </div>
+      </aside>
+
+      <!-- CATALOG MAIN AREA -->
+      <main class="catalog-main">
+        <!-- Controls bar: Dynamic Counter + Sorting -->
+        <div class="catalog-controls-bar">
+          <div class="results-count">
+            Showing <span id="filteredCount">6</span> of 6 Vehicles
+          </div>
+
+          <div class="sort-wrap">
+            <label for="sortBySelect">Sort By</label>
+            <select class="sort-select" id="sortBySelect">
+              <option value="featured">Featured Collection</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="power-desc">Horsepower: Highest First</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Fleet Grid -->
+        <div class="fleet-grid" id="fleetGrid">
+          
+          <!-- Car 1: Veloce GT3 Coupé -->
+          <div class="car-box" data-category="Sports GT" data-price="189" data-power="443" data-drive="RWD">
+            <div class="car-thumb">
+              <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=700&q=80" alt="Veloce GT3 Coupé">
+              <span class="badge-category">Sports GT</span>
+              <div class="rating-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                4.9 (42)
+              </div>
+            </div>
+            <div class="car-details">
+              <div class="car-title-row"><h3>Veloce GT3 Coupé</h3></div>
+              <p class="car-sub">Twin-Turbo Flat-6 • PDK Dual-Clutch</p>
+              <div class="car-specs">
+                <div class="spec-node"><span class="spec-node-label">Power</span><strong>443 HP</strong></div>
+                <div class="spec-node"><span class="spec-node-label">0-100</span><strong>3.4s</strong></div>
+                <div class="spec-node"><span class="spec-node-label">Drive</span><strong>RWD</strong></div>
+              </div>
+              <div class="car-meta-bottom">
+                <div class="rate"><strong>$189</strong><span>per day / tax inc.</span></div>
+                <a href="index.html#home" class="btn btn-secondary">Reserve</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Car 2: Veloce Apex-S Plaid -->
+          <div class="car-box" data-category="Electric Flagship" data-price="149" data-power="1020" data-drive="AWD,EV">
+            <div class="car-thumb">
+              <img src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=700&q=80" alt="Veloce Apex-S Plaid">
+              <span class="badge-category">Electric Flagship</span>
+              <div class="rating-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                5.0 (64)
+              </div>
+            </div>
+            <div class="car-details">
+              <div class="car-title-row"><h3>Veloce Apex-S Plaid</h3></div>
+              <p class="car-sub">Tri-Motor AWD • Full Autopilot Tier</p>
+              <div class="car-specs">
+                <div class="spec-node"><span class="spec-node-label">Range</span><strong>600 km</strong></div>
+                <div class="spec-node"><span class="spec-node-label">0-100</span><strong>2.1s</strong></div>
+                <div class="spec-node"><span class="spec-node-label">Drive</span><strong>AWD EV</strong></div>
+              </div>
+              <div class="car-meta-bottom">
+                <div class="rate"><strong>$149</strong><span>per day / tax inc.</span></div>
+                <a href="index.html#home" class="btn btn-secondary">Reserve</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Car 3: Veloce Sovereign V8 4WD -->
+          <div class="car-box" data-category="Luxury SUV" data-price="165" data-power="523" data-drive="AWD">
+            <div class="car-thumb">
+              <img src="https://images.unsplash.com/photo-1541348263662-e0c86437bf7f?auto=format&fit=crop&w=700&q=80" alt="Veloce Sovereign V8 4WD">
+              <span class="badge-category">Luxury SUV</span>
+              <div class="rating-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                4.8 (38)
+              </div>
+            </div>
+            <div class="car-details">
+              <div class="car-title-row"><h3>Veloce Sovereign V8 4WD</h3></div>
+              <p class="car-sub">Twin-Turbo V8 • Executive 7 Seating</p>
+              <div class="car-specs">
+                <div class="spec-node"><span class="spec-node-label">Capacity</span><strong>7 Seats</strong></div>
+                <div class="spec-node"><span class="spec-node-label">Power</span><strong>523 HP</strong></div>
+                <div class="spec-node"><span class="spec-node-label">Drive</span><strong>AWD</strong></div>
+              </div>
+              <div class="car-meta-bottom">
+                <div class="rate"><strong>$165</strong><span>per day / tax inc.</span></div>
+                <a href="index.html#home" class="btn btn-secondary">Reserve</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Car 4: Veloce Nemesis GT Biturbo -->
+          <div class="car-box" data-category="Track Ready" data-price="210" data-power="577" data-drive="AWD">
+            <div class="car-thumb">
+              <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=700&q=80" alt="Veloce Nemesis GT Biturbo">
+              <span class="badge-category">Track Ready</span>
+              <div class="rating-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                4.9 (51)
+              </div>
+            </div>
+            <div class="car-details">
+              <div class="car-title-row"><h3>Veloce Nemesis GT Biturbo</h3></div>
+              <p class="car-sub">Handbuilt 4.0L V8 Biturbo • Dynamic AWD</p>
+              <div class="car-specs">
+                <div class="spec-node"><span class="spec-node-label">Power</span><strong>577 HP</strong></div>
+                <div class="spec-node"><span class="spec-node-label">0-100</span><strong>3.1s</strong></div>
+                <div class="spec-node"><span class="spec-node-label">Drive</span><strong>AWD</strong></div>
+              </div>
+              <div class="car-meta-bottom">
+                <div class="rate"><strong>$210</strong><span>per day / tax inc.</span></div>
+                <a href="index.html#home" class="btn btn-secondary">Reserve</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Car 5: Veloce Electra RS -->
+          <div class="car-box" data-category="Electric Flagship" data-price="195" data-power="750" data-drive="AWD,EV">
+            <div class="car-thumb">
+              <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=700&q=80" alt="Veloce Electra RS">
+              <span class="badge-category">Electric Flagship</span>
+              <div class="rating-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                5.0 (46)
+              </div>
+            </div>
+            <div class="car-details">
+              <div class="car-title-row"><h3>Veloce Electra RS</h3></div>
+              <p class="car-sub">800V Architecture • Overboost Launch Mode</p>
+              <div class="car-specs">
+                <div class="spec-node"><span class="spec-node-label">Power</span><strong>750 HP</strong></div>
+                <div class="spec-node"><span class="spec-node-label">0-100</span><strong>2.6s</strong></div>
+                <div class="spec-node"><span class="spec-node-label">Drive</span><strong>AWD EV</strong></div>
+              </div>
+              <div class="car-meta-bottom">
+                <div class="rate"><strong>$195</strong><span>per day / tax inc.</span></div>
+                <a href="index.html#home" class="btn btn-secondary">Reserve</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Car 6: Veloce Monza Competition -->
+          <div class="car-box" data-category="Sports GT" data-price="175" data-power="617" data-drive="AWD">
+            <div class="car-thumb">
+              <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=700&q=80" alt="Veloce Monza Competition">
+              <span class="badge-category">Sports GT</span>
+              <div class="rating-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                4.8 (33)
+              </div>
+            </div>
+            <div class="car-details">
+              <div class="car-title-row"><h3>Veloce Monza Competition</h3></div>
+              <p class="car-sub">TwinPower Turbo V8 • M xDrive Dynamic</p>
+              <div class="car-specs">
+                <div class="spec-node"><span class="spec-node-label">Power</span><strong>617 HP</strong></div>
+                <div class="spec-node"><span class="spec-node-label">0-100</span><strong>3.0s</strong></div>
+                <div class="spec-node"><span class="spec-node-label">Drive</span><strong>AWD</strong></div>
+              </div>
+              <div class="car-meta-bottom">
+                <div class="rate"><strong>$175</strong><span>per day / tax inc.</span></div>
+                <a href="index.html#home" class="btn btn-secondary">Reserve</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Empty State when no cars match filters -->
+          <div class="empty-state" id="emptyState">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            <h4>No Vehicles Match Your Criteria</h4>
+            <p>Try widening your daily rate threshold, resetting the keyword search, or clearing selected drivetrain filters.</p>
+            <button class="btn btn-secondary" id="resetEmptyBtn">Clear All Filters</button>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       5. FOOTER
+  ========================================================= -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <a href="index.html" class="footer-logo">
+          <span class="logo-badge" style="width: 32px; height: 32px; font-size: 15px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </span>
+          VELOCE
+        </a>
+        <p class="footer-desc">
+          Crafting exceptional rental journeys across North America and Europe. Instant roadside lock, zero excess options, and elite concierge support.
+        </p>
+        <div class="social-links">
+          <a href="#" class="social-btn" aria-label="Twitter">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="LinkedIn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="Instagram">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Vehicles & Fleet</h4>
+        <ul class="footer-links">
+          <li><a href="cars.html">Sports Cars & Coupes</a></li>
+          <li><a href="cars.html">Electric Fleet (EV)</a></li>
+          <li><a href="cars.html">Luxury Executive SUVs</a></li>
+          <li><a href="index.html#services">Chauffeur Service</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support & Policy</h4>
+        <ul class="footer-links">
+          <li><a href="about.html">Rental Guidelines</a></li>
+          <li><a href="index.html#how-it-works">Comprehensive Cover</a></li>
+          <li><a href="index.html#faq">Charging Policy</a></li>
+          <li><a href="index.html#faq">Help Center & FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Headquarters & Concierge</h4>
+        <p class="footer-desc" style="margin-bottom: 14px;">Direct line to client operations and private airside logistics.</p>
+        <ul class="footer-contact-list">
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>750 Lexington Ave, 24th Fl, New York, NY 10022</span>
+          </li>
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <a href="tel:+18004567890">+1 (800) 456-7890</a>
+          </li>
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <a href="mailto:concierge@velocefleet.com">concierge@velocefleet.com</a>
+          </li>
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>Mon - Sun: 24/7 Priority Dispatch</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div>&copy; 2026 Veloce Fleet Technologies Inc. All rights reserved.</div>
+        <div class="footer-legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Security Protocol</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       6. REAL-TIME SEARCH & FILTER JAVASCRIPT ENGINE
+  ========================================================= -->
+  <script>
+    // 1. Mobile Drawer Navigation
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+    const closeDrawerLinks = document.querySelectorAll('.close-drawer');
+
+    function toggleMobileDrawer(open) {
+      if (open) {
+        mobileDrawer.classList.add('open');
+        drawerOverlay.classList.add('open');
+        mobileMenuBtn.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileDrawer.classList.remove('open');
+        drawerOverlay.classList.remove('open');
+        mobileMenuBtn.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    mobileMenuBtn.addEventListener('click', () => {
+      const isOpen = mobileDrawer.classList.contains('open');
+      toggleMobileDrawer(!isOpen);
+    });
+
+    drawerOverlay.addEventListener('click', () => toggleMobileDrawer(false));
+    closeDrawerLinks.forEach(link => {
+      link.addEventListener('click', () => toggleMobileDrawer(false));
+    });
+
+    // 2. Real-Time Search & Multi-Facet Filtering Engine
+    const keywordInput = document.getElementById('keywordSearch');
+    const categoryRadios = document.querySelectorAll('input[name="categoryFilter"]');
+    const priceRange = document.getElementById('priceRange');
+    const priceReadout = document.getElementById('priceReadout');
+    const driveCheckboxes = document.querySelectorAll('.drive-filter');
+    const sortSelect = document.getElementById('sortBySelect');
+    const gridContainer = document.getElementById('fleetGrid');
+    const carCards = Array.from(document.querySelectorAll('.fleet-grid .car-box'));
+    const filteredCountSpan = document.getElementById('filteredCount');
+    const emptyState = document.getElementById('emptyState');
+    const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+    const resetEmptyBtn = document.getElementById('resetEmptyBtn');
+
+    function applyFilters() {
+      const keyword = keywordInput.value.trim().toLowerCase();
+      const selectedCategory = document.querySelector('input[name="categoryFilter"]:checked').value;
+      const maxPrice = Number(priceRange.value);
+      priceReadout.textContent = `$${maxPrice}`;
+
+      const selectedDrives = Array.from(driveCheckboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+
+      let visibleCount = 0;
+
+      carCards.forEach(card => {
+        const title = card.querySelector('h3').textContent.toLowerCase();
+        const subtitle = card.querySelector('.car-sub').textContent.toLowerCase();
+        const category = card.getAttribute('data-category');
+        const price = Number(card.getAttribute('data-price'));
+        const driveTypes = card.getAttribute('data-drive').split(',');
+
+        // Matching checks
+        const matchesKeyword = !keyword || title.includes(keyword) || subtitle.includes(keyword);
+        const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
+        const matchesPrice = price <= maxPrice;
+        const matchesDrive = selectedDrives.length === 0 || selectedDrives.every(d => driveTypes.includes(d));
+
+        if (matchesKeyword && matchesCategory && matchesPrice && matchesDrive) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      filteredCountSpan.textContent = visibleCount;
+
+      if (visibleCount === 0) {
+        emptyState.classList.add('show');
+      } else {
+        emptyState.classList.remove('show');
+      }
+    }
+
+    // 3. Sorting Execution
+    function applySorting() {
+      const sortValue = sortSelect.value;
+      const sortedCards = [...carCards];
+
+      if (sortValue === 'price-asc') {
+        sortedCards.sort((a, b) => Number(a.getAttribute('data-price')) - Number(b.getAttribute('data-price')));
+      } else if (sortValue === 'price-desc') {
+        sortedCards.sort((a, b) => Number(b.getAttribute('data-price')) - Number(a.getAttribute('data-price')));
+      } else if (sortValue === 'power-desc') {
+        sortedCards.sort((a, b) => Number(b.getAttribute('data-power')) - Number(a.getAttribute('data-power')));
+      }
+
+      sortedCards.forEach(card => gridContainer.appendChild(card));
+      gridContainer.appendChild(emptyState);
+    }
+
+    // Reset Function
+    function resetAllFilters() {
+      keywordInput.value = '';
+      document.querySelector('input[name="categoryFilter"][value="all"]').checked = true;
+      priceRange.value = 210;
+      driveCheckboxes.forEach(cb => cb.checked = false);
+      sortSelect.value = 'featured';
+      applyFilters();
+      applySorting();
+    }
+
+    // Event Listeners
+    keywordInput.addEventListener('input', applyFilters);
+    categoryRadios.forEach(r => r.addEventListener('change', applyFilters));
+    priceRange.addEventListener('input', applyFilters);
+    driveCheckboxes.forEach(cb => cb.addEventListener('change', applyFilters));
+    sortSelect.addEventListener('change', applySorting);
+    resetFiltersBtn.addEventListener('click', resetAllFilters);
+    resetEmptyBtn.addEventListener('click', resetAllFilters);
+
+    // Initial pass
+    applyFilters();
+  </script>
+</body>
+</html>

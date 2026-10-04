@@ -1,0 +1,3288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Veloce | Prestige Fleet & Bespoke Mobility Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. BESPOKE PRESTIGE DESIGN TOKENS (LIGHT LUXURY)
+       ========================================================================== */
+    :root {
+      --gold-primary: #b88e1e;
+      --gold-hover: #9c7713;
+      --gold-light: #fef9e8;
+      --gold-border: rgba(184, 142, 30, 0.28);
+      --gold-glow: rgba(184, 142, 30, 0.18);
+
+      --carbon-950: #0a0d14;
+      --carbon-900: #111520;
+      --carbon-800: #1b202e;
+      --carbon-700: #2d3548;
+
+      --text-main: #0c0f17;
+      --text-muted: #525a6c;
+      --text-subtle: #8a94a6;
+
+      --surface-body: #f8f9fb;
+      --surface-card: #ffffff;
+      --surface-card-subtle: #f1f3f7;
+      --surface-card-highlight: #ffffff;
+
+      --line-subtle: rgba(12, 15, 23, 0.08);
+      --line-medium: rgba(12, 15, 23, 0.12);
+
+      --accent-green: #0d9488;
+      --accent-green-bg: #f0fdfa;
+      --warning-gold: #d97706;
+
+      --font-display: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+      --radius-xs: 6px;
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+
+      --shadow-ambient: 0 4px 20px -2px rgba(12, 15, 23, 0.04), 0 1px 3px rgba(12, 15, 23, 0.02);
+      --shadow-elevated: 0 16px 36px -8px rgba(12, 15, 23, 0.08), 0 4px 12px -2px rgba(12, 15, 23, 0.03);
+      --shadow-floating: 0 24px 50px -12px rgba(12, 15, 23, 0.12), 0 0 0 1px rgba(12, 15, 23, 0.05);
+
+      --ease-luxury: cubic-bezier(0.19, 1, 0.22, 1);
+      --transition-fast: 0.22s var(--ease-luxury);
+      --transition-base: 0.35s var(--ease-luxury);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--surface-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      padding-bottom: calc(74px + env(safe-area-inset-bottom));
+      background-image: 
+        radial-gradient(1200px 500px at 100% 0%, rgba(184, 142, 30, 0.04) 0%, transparent 70%),
+        radial-gradient(900px 400px at 0% 40%, rgba(13, 148, 136, 0.03) 0%, transparent 60%);
+      background-attachment: fixed;
+    }
+
+    @media (min-width: 992px) {
+      body { padding-bottom: 0; }
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    svg {
+      display: inline-block;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1260px;
+      margin-inline: auto;
+      padding-inline: clamp(20px, 4vw, 32px);
+    }
+
+    /* SECTION HEADERS */
+    .section-header {
+      text-align: center;
+      max-width: 720px;
+      margin-inline: auto;
+      margin-bottom: clamp(44px, 6vw, 64px);
+    }
+
+    .section-header.flex-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      text-align: left;
+      max-width: 100%;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .section-tag-lead {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--carbon-900);
+      background-color: var(--surface-card);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      margin-bottom: 14px;
+      border: 1px solid var(--line-medium);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .section-tag-lead svg {
+      color: var(--gold-primary);
+    }
+
+    .section-header h2 {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 4.2vw, 42px);
+      font-weight: 800;
+      color: var(--carbon-950);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: clamp(14.5px, 1.8vw, 16px);
+      margin-top: 12px;
+      line-height: 1.65;
+    }
+
+    /* LUXURY BUTTONS */
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 12px 26px;
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition-base);
+      border: 1px solid transparent;
+      outline: none;
+      min-height: 48px;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--carbon-950);
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(10, 13, 20, 0.22);
+    }
+    .btn-primary:hover {
+      background: var(--carbon-800);
+      box-shadow: 0 8px 24px rgba(10, 13, 20, 0.28);
+      transform: translateY(-2px);
+      color: #ffffff;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-primary), #977111);
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(184, 142, 30, 0.32);
+    }
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #c79a20, var(--gold-hover));
+      box-shadow: 0 8px 24px rgba(184, 142, 30, 0.45);
+      transform: translateY(-2px);
+      color: #ffffff;
+    }
+
+    .btn-secondary {
+      background: var(--surface-card);
+      color: var(--carbon-900);
+      border-color: var(--line-medium);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+    .btn-secondary:hover {
+      background: var(--surface-card-subtle);
+      border-color: rgba(12, 15, 23, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* =========================================================
+       1. TOPBAR & LUXURY AIRSIDE NAVBAR
+    ========================================================= */
+    .topbar {
+      background: var(--carbon-950);
+      color: var(--text-subtle);
+      font-size: 12px;
+      font-weight: 500;
+      padding-block: 9px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .topbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .topbar-left, .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .topbar-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #9ba4b5;
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .topbar-item:hover { color: #ffffff; }
+    .topbar-divider { width: 1px; height: 12px; background: rgba(255, 255, 255, 0.15); }
+    .topbar-select-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .topbar-select {
+      background: transparent;
+      border: none;
+      color: #9ba4b5;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+    }
+    .topbar-select option { background: var(--carbon-900); color: #ffffff; }
+
+    header {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--line-subtle);
+      transition: background var(--transition-fast);
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 78px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      text-decoration: none;
+      letter-spacing: -0.03em;
+    }
+    .logo-badge {
+      background: var(--carbon-950);
+      color: var(--gold-primary);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(184, 142, 30, 0.35);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .nav-menu {
+      display: none;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+    @media (min-width: 992px) {
+      .nav-menu { display: flex; }
+    }
+    .nav-item { position: relative; }
+    .nav-link {
+      font-weight: 600;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding-block: 10px;
+    }
+    .nav-link svg.chevron { transition: transform var(--transition-fast); }
+    .nav-link:hover, .nav-link.active { color: var(--carbon-950); }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      min-width: 250px;
+      background: var(--surface-card);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-floating);
+      padding: 8px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: var(--transition-fast);
+      list-style: none;
+      pointer-events: none;
+      z-index: 1010;
+    }
+    .nav-item:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .nav-item:hover .nav-link svg.chevron { transform: rotate(180deg); }
+    .dropdown-item a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: var(--radius-xs);
+      transition: var(--transition-fast);
+    }
+    .dropdown-item a:hover {
+      background: var(--surface-card-subtle);
+      color: var(--carbon-950);
+      transform: translateX(3px);
+    }
+    .dropdown-item a svg {
+      color: var(--gold-primary);
+    }
+
+    .nav-actions { display: none; align-items: center; gap: 12px; }
+    @media (min-width: 992px) {
+      .nav-actions { display: flex; }
+    }
+
+    /* Mobile Hamburger */
+    .hamburger-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      background: transparent;
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      padding: 8px;
+      z-index: 1100;
+    }
+    .hamburger-btn span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background-color: var(--carbon-950);
+      border-radius: var(--radius-full);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .hamburger-btn.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-btn.active span:nth-child(2) { opacity: 0; }
+    .hamburger-btn.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (min-width: 992px) {
+      .hamburger-btn { display: none; }
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 13, 20, 0.45);
+      backdrop-filter: blur(6px);
+      z-index: 1050;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition-fast);
+    }
+    .mobile-drawer-overlay.open { opacity: 1; visibility: visible; }
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 86%;
+      max-width: 330px;
+      height: 100%;
+      background: var(--surface-card);
+      z-index: 1060;
+      box-shadow: -15px 0 35px rgba(0, 0, 0, 0.08);
+      transform: translateX(100%);
+      transition: transform var(--transition-base);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 24px 22px 90px;
+    }
+    .mobile-drawer.open { transform: translateX(0); }
+    .mobile-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line-subtle);
+    }
+    .mobile-nav-list { list-style: none; display: flex; flex-direction: column; }
+    .mobile-nav-item { border-bottom: 1px solid var(--surface-card-subtle); }
+    .mobile-nav-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 4px;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--carbon-950);
+      text-decoration: none;
+    }
+    .mobile-nav-link-content { display: inline-flex; align-items: center; gap: 10px; }
+    .mobile-submenu-toggle {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      color: var(--text-muted);
+    }
+    .mobile-submenu {
+      display: none;
+      list-style: none;
+      padding: 6px 0 12px 14px;
+      background: var(--surface-card-subtle);
+      border-radius: var(--radius-sm);
+    }
+    .mobile-submenu.open { display: block; }
+    .mobile-submenu li a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      font-size: 13.5px;
+      color: var(--carbon-800);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .mobile-drawer-actions { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
+
+    /* Mobile Bottom Action Bar */
+    .mobile-bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--line-medium);
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      display: flex;
+      gap: 10px;
+      z-index: 990;
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+    }
+    @media (min-width: 992px) {
+      .mobile-bottom-bar { display: none; }
+    }
+    .mobile-bottom-bar .btn { flex: 1; min-height: 44px; padding: 8px 12px; font-size: 13.5px; }
+
+    /* =========================================================
+       2. HERO SECTION & INTEGRATED DISPATCH MODULE
+    ========================================================= */
+    .hero {
+      position: relative;
+      padding-block: clamp(60px, 8vw, 96px);
+      overflow: hidden;
+    }
+    .hero-wrap {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    @media (min-width: 992px) {
+      .hero-wrap { grid-template-columns: 1.05fr 0.95fr; gap: 50px; }
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--surface-card);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-full);
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--carbon-950);
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-ambient);
+    }
+    .hero-eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--gold-primary);
+      box-shadow: 0 0 0 3px rgba(184, 142, 30, 0.2);
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5.2vw, 58px);
+      font-weight: 800;
+      color: var(--carbon-950);
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      margin-bottom: 20px;
+    }
+    .hero h1 span {
+      color: var(--gold-primary);
+      background: linear-gradient(135deg, var(--gold-primary) 0%, #8b6507 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: clamp(15px, 1.8vw, 17px);
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 28px;
+      max-width: 530px;
+    }
+    .hero-actions { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+    @media (min-width: 480px) {
+      .hero-actions { flex-direction: row; }
+    }
+    .hero-trust-bar { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+    .trust-avatars { display: flex; }
+    .trust-avatars img {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-full);
+      border: 2px solid var(--surface-card);
+      margin-left: -8px;
+      object-fit: cover;
+    }
+    .trust-avatars img:first-child { margin-left: 0; }
+    .trust-text { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+    .trust-text span { color: var(--warning-gold); font-weight: 800; display: inline-flex; align-items: center; gap: 3px; }
+
+    .hero-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 26px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line-subtle);
+    }
+    .feature-point {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--carbon-800);
+    }
+    .feature-point svg { color: var(--accent-green); }
+
+    /* INTEGRATED HERO DISPATCH CARD WITH INPUT ICONS */
+    .hero-dispatch-card {
+      background: var(--surface-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line-medium);
+      box-shadow: var(--shadow-floating);
+      padding: clamp(24px, 3.5vw, 36px);
+      position: relative;
+    }
+    .dispatch-card-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold-primary);
+      background: var(--gold-light);
+      border: 1px solid var(--gold-border);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      margin-bottom: 12px;
+    }
+    .dispatch-header h3 {
+      font-family: var(--font-display);
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      letter-spacing: -0.02em;
+    }
+    .dispatch-header p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      margin-bottom: 22px;
+    }
+    .dispatch-form {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 540px) {
+      .dispatch-form { grid-template-columns: repeat(2, 1fr); }
+      .dispatch-form .form-col-full { grid-column: span 2; }
+    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label {
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--carbon-900);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Icon Input Shell */
+    .input-shell {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-shell svg {
+      position: absolute;
+      left: 14px;
+      color: var(--text-subtle);
+      pointer-events: none;
+      transition: color var(--transition-fast);
+    }
+    .input-control {
+      width: 100%;
+      height: 48px;
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-sm);
+      padding-left: 42px;
+      padding-right: 14px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--carbon-950);
+      background-color: var(--surface-card-subtle);
+      outline: none;
+      transition: var(--transition-fast);
+    }
+    .input-control:focus {
+      border-color: var(--carbon-950);
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(12, 15, 23, 0.08);
+    }
+    .input-control:focus + svg {
+      color: var(--carbon-950);
+    }
+
+    .booking-summary-pill {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--surface-card-subtle);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--carbon-800);
+      border: 1px dashed var(--line-medium);
+    }
+
+    /* =========================================================
+       3. ABOUT US (EDITORIAL BESPOKE)
+       ========================================================= */
+    .section-about {
+      padding-block: clamp(80px, 9vw, 120px);
+      background: var(--surface-card);
+      border-top: 1px solid var(--line-subtle);
+    }
+    .about-editorial-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+    @media (min-width: 992px) {
+      .about-editorial-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 70px;
+      }
+    }
+    .about-gallery-stage {
+      position: relative;
+    }
+    .about-img-hero {
+      width: 100%;
+      height: clamp(340px, 42vw, 470px);
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-elevated);
+      border: 1px solid var(--line-subtle);
+    }
+    .about-img-inset {
+      position: absolute;
+      bottom: -28px;
+      right: -20px;
+      width: 48%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+      border: 5px solid #ffffff;
+      box-shadow: var(--shadow-floating);
+      display: none;
+    }
+    @media (min-width: 640px) {
+      .about-img-inset { display: block; }
+    }
+    .about-badge-telemetry {
+      position: absolute;
+      top: 24px;
+      left: -15px;
+      background: var(--carbon-950);
+      color: #ffffff;
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: var(--shadow-floating);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .about-badge-telemetry .icon-check {
+      color: var(--accent-green);
+    }
+    .about-stats-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 34px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line-subtle);
+    }
+    .about-stat-item strong {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      display: block;
+      line-height: 1.1;
+    }
+    .about-stat-item span {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .about-checklist {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      margin: 26px 0 30px;
+    }
+    .about-checklist li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--carbon-800);
+    }
+    .about-checklist svg {
+      color: var(--accent-green);
+    }
+
+    /* =========================================================
+       4. OUR SERVICES
+       ========================================================= */
+    .section-services {
+      padding-block: clamp(70px, 8vw, 100px);
+      background: var(--surface-body);
+      border-top: 1px solid var(--line-subtle);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 768px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 992px) {
+      .services-grid { grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    }
+    .service-card {
+      background: var(--surface-card);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-md);
+      padding: 34px 28px;
+      transition: var(--transition-base);
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-ambient);
+    }
+    .service-card:hover {
+      border-color: var(--carbon-950);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-elevated);
+    }
+    .service-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-sm);
+      background: var(--surface-card-subtle);
+      color: var(--carbon-950);
+      border: 1px solid var(--line-medium);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+    }
+    .service-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      margin-bottom: 8px;
+    }
+    .service-card p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+    .service-link {
+      margin-top: auto;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--carbon-950);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: gap var(--transition-fast);
+    }
+    .service-link:hover { gap: 9px; }
+
+    /* =========================================================
+       5. FLEET SECTION & LIVE FILTER BAR
+       ========================================================= */
+    .section-fleet {
+      padding-block: clamp(80px, 9vw, 120px);
+      background: var(--surface-card);
+      border-top: 1px solid var(--line-subtle);
+    }
+    
+    /* Interactive Category Filter Tabs */
+    .fleet-filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .filter-tab {
+      background: var(--surface-card-subtle);
+      border: 1px solid var(--line-medium);
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 9px 18px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .filter-tab .count {
+      font-size: 11px;
+      opacity: 0.7;
+    }
+    .filter-tab:hover {
+      background: #ffffff;
+      color: var(--carbon-950);
+      border-color: var(--carbon-950);
+    }
+    .filter-tab.active {
+      background: var(--carbon-950);
+      color: #ffffff;
+      border-color: var(--carbon-950);
+      box-shadow: 0 4px 12px rgba(10, 13, 20, 0.18);
+    }
+
+    .fleet-grid-clean {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    @media (min-width: 768px) {
+      .fleet-grid-clean { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .fleet-grid-clean { grid-template-columns: repeat(3, 1fr); }
+    }
+    .car-box {
+      background: var(--surface-card);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line-medium);
+      overflow: hidden;
+      box-shadow: var(--shadow-ambient);
+      transition: var(--transition-base);
+      display: flex;
+      flex-direction: column;
+    }
+    .car-box:hover {
+      box-shadow: var(--shadow-floating);
+      border-color: rgba(12, 15, 23, 0.35);
+      transform: translateY(-5px);
+    }
+    .car-thumb {
+      position: relative;
+      height: 235px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #111520 0%, #1e2538 100%);
+    }
+    .car-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease-luxury);
+    }
+    .car-box:hover .car-thumb img {
+      transform: scale(1.06);
+    }
+    .badge-category {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(10, 13, 20, 0.88);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      letter-spacing: 0.05em;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .rating-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: #ffffff;
+      color: var(--carbon-950);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: var(--radius-xs);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+    .rating-badge svg { color: var(--warning-gold); }
+    .car-details {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .car-title-row h3 { font-size: 19px; font-weight: 800; color: var(--carbon-950); }
+    .car-sub { font-size: 12.5px; color: var(--text-muted); margin: 4px 0 16px; }
+    .car-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      background: var(--surface-card-subtle);
+      padding: 12px 10px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 20px;
+      border: 1px solid var(--line-subtle);
+    }
+    .spec-node {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .spec-node-label {
+      font-size: 10px;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .spec-node strong { font-size: 13px; color: var(--carbon-900); font-weight: 700; display: block; }
+    .car-meta-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 18px;
+      border-top: 1px solid var(--line-subtle);
+    }
+    .rate strong { font-family: var(--font-display); font-size: 24px; font-weight: 800; color: var(--carbon-950); line-height: 1; }
+    .rate span { font-size: 11px; color: var(--text-subtle); display: block; margin-top: 3px; font-weight: 500; }
+
+    /* =========================================================
+       6. HOW IT WORKS
+       ========================================================= */
+    .section-hiw {
+      padding-block: clamp(80px, 9vw, 120px);
+      background: var(--surface-body);
+      border-top: 1px solid var(--line-subtle);
+    }
+    .hiw-stepped-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 26px;
+    }
+    @media (min-width: 768px) {
+      .hiw-stepped-grid { grid-template-columns: repeat(3, 1fr); gap: 30px; }
+    }
+    .hiw-step-card {
+      background: var(--surface-card);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-md);
+      padding: 38px 28px;
+      position: relative;
+      transition: var(--transition-base);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-ambient);
+    }
+    .hiw-step-card:hover {
+      border-color: var(--carbon-950);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-elevated);
+    }
+    .hiw-watermark-num {
+      position: absolute;
+      top: 10px;
+      right: 18px;
+      font-family: var(--font-display);
+      font-size: 70px;
+      font-weight: 800;
+      color: rgba(12, 15, 23, 0.04);
+      line-height: 1;
+      pointer-events: none;
+    }
+    .hiw-icon-wrapper {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-sm);
+      background: var(--surface-card-subtle);
+      border: 1px solid var(--line-medium);
+      color: var(--carbon-950);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+    }
+    .hiw-step-card h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      margin-bottom: 10px;
+    }
+    .hiw-step-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       7. CTA BANNER
+       ========================================================= */
+    .section-cta {
+      padding-block: clamp(64px, 8vw, 96px);
+      background: var(--carbon-950);
+      color: #ffffff;
+      border-top: 1px solid var(--line-subtle);
+      position: relative;
+    }
+    .cta-box {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      text-align: center;
+      align-items: center;
+    }
+    @media (min-width: 992px) {
+      .cta-box {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+    .cta-content h2 {
+      font-family: var(--font-display);
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.2;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .cta-content p { font-size: 15px; color: #9ba4b5; }
+    .cta-btns {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 12px;
+    }
+    @media (min-width: 480px) {
+      .cta-btns { flex-direction: row; width: auto; }
+    }
+
+    /* =========================================================
+       8. PROCESS TIMELINE STEPS
+       ========================================================= */
+    .section-process {
+      padding-block: clamp(80px, 9vw, 120px);
+      background: var(--surface-card);
+      position: relative;
+    }
+    .process-timeline-elevated {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      position: relative;
+    }
+    @media (min-width: 576px) {
+      .process-timeline-elevated { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 992px) {
+      .process-timeline-elevated {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 26px;
+      }
+      .process-timeline-elevated::before {
+        content: '';
+        position: absolute;
+        top: 48px;
+        left: 10%;
+        width: 80%;
+        height: 2px;
+        background: repeating-linear-gradient(to right, var(--carbon-950) 0, var(--carbon-950) 8px, transparent 8px, transparent 16px);
+        opacity: 0.15;
+        z-index: 1;
+      }
+    }
+    .process-step-node {
+      background: var(--surface-card-subtle);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-md);
+      padding: 32px 24px;
+      position: relative;
+      z-index: 2;
+      transition: var(--transition-base);
+      display: flex;
+      flex-direction: column;
+    }
+    .process-step-node:hover {
+      background: var(--surface-card);
+      border-color: var(--carbon-950);
+      box-shadow: var(--shadow-elevated);
+      transform: translateY(-6px);
+    }
+    .process-step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .process-icon-box {
+      width: 54px;
+      height: 54px;
+      background: var(--surface-card);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--carbon-950);
+      transition: var(--transition-fast);
+    }
+    .process-step-node:hover .process-icon-box {
+      background: var(--carbon-950);
+      color: #ffffff;
+      border-color: var(--carbon-950);
+    }
+    .process-order-tag {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--carbon-900);
+      background: #ffffff;
+      border: 1px solid var(--line-medium);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      letter-spacing: 0.04em;
+    }
+    .process-step-node h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      margin-bottom: 8px;
+    }
+    .process-step-node p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       9. FAQ ACCORDION
+       ========================================================= */
+    .section-faq {
+      padding-block: clamp(70px, 8vw, 100px);
+      background: var(--surface-body);
+      border-top: 1px solid var(--line-subtle);
+    }
+    .faq-container {
+      max-width: 800px;
+      margin-inline: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .faq-item {
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--surface-card);
+      box-shadow: var(--shadow-ambient);
+    }
+    .faq-question {
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--carbon-950);
+      cursor: pointer;
+      user-select: none;
+    }
+    .faq-question svg { transition: transform var(--transition-fast); flex-shrink: 0; color: var(--text-subtle); }
+    .faq-item.open .faq-question svg { transform: rotate(180deg); color: var(--carbon-950); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s var(--ease-luxury);
+      background: var(--surface-card-subtle);
+    }
+    .faq-answer p {
+      padding: 0 24px 20px;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* =========================================================
+       10. STAT COUNTERS
+       ========================================================= */
+    .section-counter {
+      padding-block: 64px;
+      background: var(--carbon-950);
+      color: #ffffff;
+      border-top: 1px solid var(--line-subtle);
+    }
+    .counter-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .counter-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    .counter-box h3 {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 4.5vw, 44px);
+      font-weight: 800;
+      margin-bottom: 2px;
+      color: #ffffff;
+    }
+    .counter-box h3 span { color: var(--gold-primary); }
+    .counter-box p { font-size: 13.5px; color: #9ba4b5; font-weight: 600; }
+
+    /* =========================================================
+       11. LATEST ARTICLES
+       ========================================================= */
+    .section-articles {
+      padding-block: clamp(80px, 9vw, 110px);
+      background: var(--surface-card);
+      border-top: 1px solid var(--line-subtle);
+    }
+    .articles-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 768px) {
+      .articles-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 992px) {
+      .articles-grid { grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    }
+    .article-card {
+      background: var(--surface-card-subtle);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition-base);
+    }
+    .article-card:hover {
+      background: #ffffff;
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-elevated);
+      border-color: var(--carbon-950);
+    }
+    .article-thumb-wrap { height: 200px; position: relative; }
+    .article-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .article-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--carbon-950);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .article-content {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .article-meta { font-size: 12px; color: var(--text-subtle); margin-bottom: 8px; font-weight: 600; }
+    .article-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .article-excerpt { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; }
+    .article-link {
+      margin-top: auto;
+      font-weight: 700;
+      color: var(--carbon-950);
+      text-decoration: none;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* =========================================================
+       12. TESTIMONIAL CAROUSEL
+       ========================================================= */
+    .section-testimonials {
+      padding-block: clamp(80px, 9vw, 110px);
+      background: var(--surface-body);
+      border-top: 1px solid var(--line-subtle);
+      overflow: hidden;
+    }
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .carousel-viewport {
+      overflow: hidden;
+      width: 100%;
+      border-radius: var(--radius-md);
+      cursor: grab;
+    }
+    .carousel-viewport:active {
+      cursor: grabbing;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.45s var(--ease-luxury);
+      will-change: transform;
+    }
+    .carousel-slide {
+      min-width: 100%;
+      padding: 10px;
+    }
+    @media (min-width: 768px) {
+      .carousel-slide { min-width: 50%; }
+    }
+    @media (min-width: 1024px) {
+      .carousel-slide { min-width: 33.333%; }
+    }
+    .testimonial-card-premium {
+      background: var(--surface-card);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-md);
+      padding: 32px 26px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-ambient);
+    }
+    .review-stars {
+      color: var(--warning-gold);
+      margin-bottom: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .review-text {
+      font-size: 14.5px;
+      color: var(--carbon-800);
+      line-height: 1.65;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+    .reviewer-meta { display: flex; align-items: center; gap: 14px; }
+    .reviewer-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--line-medium);
+    }
+    .reviewer-info strong { display: block; font-size: 14px; color: var(--carbon-950); font-weight: 700; }
+    .reviewer-info span { font-size: 12px; color: var(--text-subtle); }
+    
+    .carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 36px;
+    }
+    .carousel-arrow {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--surface-card);
+      border: 1px solid var(--line-medium);
+      color: var(--carbon-950);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    .carousel-arrow:hover {
+      background: var(--carbon-950);
+      color: #ffffff;
+      border-color: var(--carbon-950);
+    }
+    .carousel-dots {
+      display: flex;
+      gap: 8px;
+    }
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: var(--radius-full);
+      background: rgba(12, 15, 23, 0.18);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .carousel-dot.active {
+      width: 24px;
+      background: var(--carbon-950);
+    }
+
+    /* =========================================================
+       13. FOOTER
+    ========================================================= */
+    footer {
+      background: var(--carbon-950);
+      color: #9ba4b5;
+      padding-top: 60px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 36px;
+      margin-bottom: 40px;
+    }
+    @media (min-width: 576px) {
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 992px) {
+      .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1.3fr; gap: 40px; }
+    }
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+      text-decoration: none;
+      margin-bottom: 12px;
+    }
+    .footer-desc { font-size: 13.5px; line-height: 1.6; margin-bottom: 18px; color: #9ba4b5; }
+    .social-links { display: flex; gap: 10px; }
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: var(--transition-fast);
+    }
+    .social-btn:hover {
+      background: var(--gold-primary);
+      color: #ffffff;
+      border-color: var(--gold-primary);
+    }
+    .footer-col h4 {
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      color: #9ba4b5;
+      text-decoration: none;
+      font-size: 13.5px;
+      transition: color var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-links a:hover { color: #ffffff; }
+
+    /* Office & Concierge Hub */
+    .footer-contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13.5px;
+      color: #9ba4b5;
+    }
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .footer-contact-item svg {
+      color: var(--gold-primary);
+      margin-top: 3px;
+    }
+    .footer-contact-item a {
+      color: #9ba4b5;
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .footer-contact-item a:hover {
+      color: #ffffff;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 20px 0;
+      font-size: 12.5px;
+      color: var(--text-subtle);
+    }
+    .footer-bottom .container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .footer-bottom .container {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+    .footer-legal-links { display: flex; justify-content: center; gap: 16px; }
+    .footer-legal-links a { color: var(--text-subtle); text-decoration: none; transition: color var(--transition-fast); }
+    .footer-legal-links a:hover { color: #ffffff; }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================
+       1. TOPBAR & LUXURY AIRSIDE NAVBAR
+  ========================================================= -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <a href="tel:+18004567890" class="topbar-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          +1 (800) 456-7890
+        </a>
+        <div class="topbar-divider"></div>
+        <span class="topbar-item" style="display: none; @media(min-width: 600px){display:inline-flex;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Airside & Executive Terminal Logistics
+        </span>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-select-wrap">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          <select class="topbar-select" aria-label="Select Currency">
+            <option>USD ($)</option>
+            <option>EUR (€)</option>
+            <option>GBP (£)</option>
+          </select>
+        </div>
+        <div class="topbar-divider"></div>
+        <div class="topbar-select-wrap">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"></path><path d="m4 14 6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="m22 22-5-10-5 10"></path><path d="M14 18h6"></path></svg>
+          <select class="topbar-select" aria-label="Select Language">
+            <option>English</option>
+            <option>German</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="container navbar">
+      <a href="#home" class="logo">
+        <span class="logo-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        </span>
+        VELOCE
+      </a>
+
+      <!-- Desktop Nav with Dropdowns -->
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="#home" class="nav-link active">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="#about" class="nav-link">About Us</a>
+        </li>
+        
+        <!-- Services Dropdown -->
+        <li class="nav-item">
+          <a href="#services" class="nav-link">
+            Services
+            <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-item">
+              <a href="#services">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg>
+                Self-Drive Rentals
+              </a>
+            </li>
+            <li class="dropdown-item">
+              <a href="#services">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                Chauffeur Service
+              </a>
+            </li>
+            <li class="dropdown-item">
+              <a href="#services">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path></svg>
+                Airport Tarmac Delivery
+              </a>
+            </li>
+            <li class="dropdown-item">
+              <a href="#services">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                Corporate Fleet Accounts
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="#fleets" class="nav-link">Our Fleets</a>
+        </li>
+
+        <!-- How It Works Dropdown -->
+        <li class="nav-item">
+          <a href="#how-it-works" class="nav-link">
+            How It Works
+            <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-item">
+              <a href="#how-it-works">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+                Overview
+              </a>
+            </li>
+            <li class="dropdown-item">
+              <a href="#process">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line></svg>
+                4-Step Handover
+              </a>
+            </li>
+            <li class="dropdown-item">
+              <a href="#faq">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Frequently Asked Questions
+              </a>
+            </li>
+            <li class="dropdown-item">
+              <a href="#articles">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                Driving Journal
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- Desktop Nav Actions -->
+      <div class="nav-actions">
+        <a href="#fleets" class="btn btn-secondary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+          Sign In
+        </a>
+        <a href="#home" class="btn btn-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+          Book a Ride
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="hamburger-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Offcanvas Drawer -->
+  <div class="mobile-drawer-overlay" id="drawerOverlay"></div>
+  <aside class="mobile-drawer" id="mobileDrawer">
+    <div class="mobile-drawer-header">
+      <a href="#home" class="logo" style="font-size: 20px;">
+        <span class="logo-badge" style="width: 32px; height: 32px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        </span>
+        VELOCE
+      </a>
+    </div>
+
+    <ul class="mobile-nav-list">
+      <li class="mobile-nav-item">
+        <a href="#home" class="mobile-nav-link close-drawer">
+          <span class="mobile-nav-link-content">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            Home
+          </span>
+        </a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="#about" class="mobile-nav-link close-drawer">
+          <span class="mobile-nav-link-content">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            About Us
+          </span>
+        </a>
+      </li>
+      
+      <!-- Mobile Submenu: Services -->
+      <li class="mobile-nav-item">
+        <div class="mobile-nav-link">
+          <span class="mobile-nav-link-content">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            Our Services
+          </span>
+          <button class="mobile-submenu-toggle" data-target="servicesSubmenu" aria-label="Expand services submenu">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+        </div>
+        <ul class="mobile-submenu" id="servicesSubmenu">
+          <li>
+            <a href="#services" class="close-drawer">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg>
+              Self-Drive Rentals
+            </a>
+          </li>
+          <li>
+            <a href="#services" class="close-drawer">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Chauffeur Service
+            </a>
+          </li>
+          <li>
+            <a href="#services" class="close-drawer">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path></svg>
+              Airport Tarmac Delivery
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="mobile-nav-item">
+        <a href="#fleets" class="mobile-nav-link close-drawer">
+          <span class="mobile-nav-link-content">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Our Fleets
+          </span>
+        </a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="#how-it-works" class="mobile-nav-link close-drawer">
+          <span class="mobile-nav-link-content">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+            How it Works
+          </span>
+        </a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="#process" class="mobile-nav-link close-drawer">
+          <span class="mobile-nav-link-content">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line></svg>
+            Process Steps
+          </span>
+        </a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="#faq" class="mobile-nav-link close-drawer">
+          <span class="mobile-nav-link-content">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            FAQ
+          </span>
+        </a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="#articles" class="mobile-nav-link close-drawer">
+          <span class="mobile-nav-link-content">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Articles
+          </span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="mobile-drawer-actions">
+      <a href="#home" class="btn btn-primary close-drawer" style="width: 100%;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+        Book a Ride
+      </a>
+      <a href="tel:+18004567890" class="btn btn-secondary" style="width: 100%;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        Call Concierge
+      </a>
+    </div>
+  </aside>
+
+  <!-- Mobile Fixed Bottom Action Bar -->
+  <div class="mobile-bottom-bar">
+    <a href="tel:+18004567890" class="btn btn-secondary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      Call
+    </a>
+    <a href="#home" class="btn btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+      Reserve Fleet
+    </a>
+  </div>
+
+  <!-- =========================================================
+       2. HERO SECTION & INTEGRATED DISPATCH MODULE
+  ========================================================= -->
+  <section class="hero" id="home">
+    <div class="container hero-wrap">
+      <div>
+        <div class="hero-eyebrow">
+          <span class="hero-eyebrow-dot"></span>
+          Bespoke Mobility & Prestige Fleet
+        </div>
+        <h1>Drive extraordinary.<br>Every mile, <span>frictionless.</span></h1>
+        <p>Pre-inspected grand tourers and luxury electric flagships reserved with zero counter delays, zero security holds, and instant smartphone keys.</p>
+
+        <div class="hero-actions">
+          <a href="#fleets" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="12 8 8 12 12 16 12 8"></polygon></svg>
+            Explore Fleet
+          </a>
+          <a href="#how-it-works" class="btn btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+            How It Works
+          </a>
+        </div>
+
+        <div class="hero-trust-bar">
+          <div class="trust-avatars">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80" alt="Verified client">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="Verified client">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80" alt="Verified client">
+          </div>
+          <div class="trust-text">
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              4.96/5.0
+            </span> 
+            Rating across 48,000+ Journeys
+          </div>
+        </div>
+
+        <div class="hero-features">
+          <div class="feature-point">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Zero Deposit Hold
+          </div>
+          <div class="feature-point">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            24/7 Digital Pass
+          </div>
+          <div class="feature-point">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            Factory Pristine Fleet
+          </div>
+        </div>
+      </div>
+
+      <!-- INLINE HERO SEARCH FORM COLUMN -->
+      <div class="hero-dispatch-card">
+        <div class="dispatch-header">
+          <span class="dispatch-card-badge">Instant Dispatch Protocol</span>
+          <h3>Dispatch Your Chassis</h3>
+          <p>Direct curbside and private hangar delivery synchronized with your itinerary.</p>
+        </div>
+
+        <form class="dispatch-form" id="heroSearchForm">
+          <!-- 1. Pick Up -->
+          <div class="form-group">
+            <label for="searchPickUp">Pick Up Location</label>
+            <div class="input-shell">
+              <input type="text" class="input-control" id="searchPickUp" value="JFK Signature Aviation FBO" required>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            </div>
+          </div>
+
+          <!-- 2. Pick Down -->
+          <div class="form-group">
+            <label for="searchPickDown">Pick Down / Return</label>
+            <div class="input-shell">
+              <input type="text" class="input-control" id="searchPickDown" value="Same as Pick Up Location" required>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            </div>
+          </div>
+
+          <!-- 3. Date In -->
+          <div class="form-group">
+            <label for="searchDateIn">Date In</label>
+            <div class="input-shell">
+              <input type="date" class="input-control" id="searchDateIn" required>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
+          </div>
+
+          <!-- 4. Date Out -->
+          <div class="form-group">
+            <label for="searchDateOut">Date Out</label>
+            <div class="input-shell">
+              <input type="date" class="input-control" id="searchDateOut" required>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+          </div>
+
+          <!-- Live Itinerary Readout -->
+          <div class="form-col-full">
+            <div class="booking-summary-pill">
+              <span>Estimated Journey Scope:</span>
+              <span id="liveScopeDays" style="color: var(--carbon-950);">3 Days Selected</span>
+            </div>
+          </div>
+
+          <!-- Submit Action -->
+          <div class="form-group form-col-full" style="margin-top: 4px;">
+            <button type="submit" class="btn btn-primary" style="width: 100%; height: 50px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              View Guaranteed Chassis
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       3. ABOUT US
+  ========================================================= -->
+  <section class="section-about" id="about">
+    <div class="container about-editorial-grid">
+      <div class="about-gallery-stage">
+        <img class="about-img-hero" src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80" alt="Veloce GT3 Coupe in showroom">
+        <img class="about-img-inset" src="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=600&q=80" alt="Electric charging fleet station">
+        
+        <div class="about-badge-telemetry">
+          <svg class="icon-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <div>
+            <div style="font-size: 10px; color: var(--text-subtle); text-transform: uppercase; font-weight: 700;">Fleet Status</div>
+            <strong style="font-size: 13px; color: #fff;">100% Factory Calibrated</strong>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="section-tag-lead">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          The Veloce Standard
+        </span>
+        <h2>Precision-Engineered Luxury Mobility</h2>
+        <p style="margin-top: 14px; font-size: 15px; color: var(--text-muted); line-height: 1.7;">
+          Founded to dismantle the counter delays, paperwork holds, and vehicle substitutions typical of traditional rental agencies, Veloce delivers factory-pure exotics and luxury electric cruisers with instant smartphone NFC keys.
+        </p>
+
+        <ul class="about-checklist">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Exact vehicle guarantee — you drive the specific chassis you reserve.
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Zero security deposit hold options for pre-verified drivers.
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Comprehensive zero-excess coverage included with every booking.
+          </li>
+        </ul>
+
+        <div class="about-stats-strip">
+          <div class="about-stat-item">
+            <strong>150+</strong>
+            <span>Active Exotics</span>
+          </div>
+          <div class="about-stat-item">
+            <strong>12+</strong>
+            <span>Years Running</span>
+          </div>
+          <div class="about-stat-item">
+            <strong>48k</strong>
+            <span>Expeditions</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 30px;">
+          <a href="#fleets" class="btn btn-primary">
+            Discover the Lineup
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       4. OUR SERVICES
+  ========================================================= -->
+  <section class="section-services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag-lead">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          Tailored Mobility
+        </span>
+        <h2>Our Dedicated Services</h2>
+        <p>Engineered around flexible luxury driving, executive corporate transit, and curated weekend escapes.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg>
+          </div>
+          <h3>Self-Drive Car Rental</h3>
+          <p>Instant phone-based keyless release on sports coupes, electric flagships, and luxury SUVs.</p>
+          <a href="#fleets" class="service-link">
+            Browse models
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <h3>Private Chauffeur Service</h3>
+          <p>Discreet, background-checked executive drivers available for roadshows, airport escorts, and VIP galas.</p>
+          <a href="#cta" class="service-link">
+            Inquire chauffeur
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </div>
+          <h3>Airport Tarmac Delivery</h3>
+          <p>Direct curbside and private hangar delivery synchronized precisely with your flight arrival status.</p>
+          <a href="#how-it-works" class="service-link">
+            How it works
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       5. FLEET SECTION & LIVE FILTER BAR
+  ========================================================= -->
+  <section class="section-fleet" id="fleets">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag-lead">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          The Private Stable
+        </span>
+        <h2>Our Modern Fleet</h2>
+        <p>Factory-calibrated supercars, grand tourers, and electric performance models maintained to immaculate track standards.</p>
+      </div>
+
+      <!-- Live Category Filter Tabs -->
+      <div class="fleet-filter-bar">
+        <button class="filter-tab active" data-filter="all">All Vehicles <span class="count">(6)</span></button>
+        <button class="filter-tab" data-filter="Sports GT">Sports GT <span class="count">(2)</span></button>
+        <button class="filter-tab" data-filter="Electric Flagship">Electric Flagships <span class="count">(2)</span></button>
+        <button class="filter-tab" data-filter="Luxury SUV">Luxury SUV <span class="count">(1)</span></button>
+        <button class="filter-tab" data-filter="Track Ready">Track Editions <span class="count">(1)</span></button>
+      </div>
+
+      <div class="fleet-grid-clean" id="fleetGridContainer">
+        <!-- Car 1: Veloce GT3 Coupé -->
+        <div class="car-box" data-category="Sports GT">
+          <div class="car-thumb">
+            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=700&q=80" alt="Veloce GT3 Coupé">
+            <span class="badge-category">Sports GT</span>
+            <div class="rating-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              4.9 (42)
+            </div>
+          </div>
+          <div class="car-details">
+            <div class="car-title-row"><h3>Veloce GT3 Coupé</h3></div>
+            <p class="car-sub">Twin-Turbo Flat-6 • PDK Dual-Clutch</p>
+            <div class="car-specs">
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  Power
+                </span>
+                <strong>443 HP</strong>
+              </div>
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  0-100
+                </span>
+                <strong>3.4s</strong>
+              </div>
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                  Luggage
+                </span>
+                <strong>2 Bags</strong>
+              </div>
+            </div>
+            <div class="car-meta-bottom">
+              <div class="rate"><strong>$189</strong><span>per day / tax inc.</span></div>
+              <a href="#home" class="btn btn-secondary book-trigger" data-model="Veloce GT3 Coupé">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+                Reserve
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Car 2: Veloce Apex-S Plaid -->
+        <div class="car-box" data-category="Electric Flagship">
+          <div class="car-thumb">
+            <img src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=700&q=80" alt="Veloce Apex-S Plaid">
+            <span class="badge-category">Electric Flagship</span>
+            <div class="rating-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              5.0 (64)
+            </div>
+          </div>
+          <div class="car-details">
+            <div class="car-title-row"><h3>Veloce Apex-S Plaid</h3></div>
+            <p class="car-sub">Tri-Motor AWD • Full Autopilot Tier</p>
+            <div class="car-specs">
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  Range
+                </span>
+                <strong>600 km</strong>
+              </div>
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  0-100
+                </span>
+                <strong>2.1s</strong>
+              </div>
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                  Seats
+                </span>
+                <strong>5 Adult</strong>
+              </div>
+            </div>
+            <div class="car-meta-bottom">
+              <div class="rate"><strong>$149</strong><span>per day / tax inc.</span></div>
+              <a href="#home" class="btn btn-secondary book-trigger" data-model="Veloce Apex-S Plaid">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+                Reserve
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Car 3: Veloce Sovereign V8 4WD -->
+        <div class="car-box" data-category="Luxury SUV">
+          <div class="car-thumb">
+            <img src="https://images.unsplash.com/photo-1541348263662-e0c86437bf7f?auto=format&fit=crop&w=700&q=80" alt="Veloce Sovereign V8 4WD">
+            <span class="badge-category">Luxury SUV</span>
+            <div class="rating-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              4.8 (38)
+            </div>
+          </div>
+          <div class="car-details">
+            <div class="car-title-row"><h3>Veloce Sovereign V8 4WD</h3></div>
+            <p class="car-sub">Twin-Turbocharged V8 • Executive Seating</p>
+            <div class="car-specs">
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                  Capacity
+                </span>
+                <strong>7 Seats</strong>
+              </div>
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  Power
+                </span>
+                <strong>523 HP</strong>
+              </div>
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                  Luggage
+                </span>
+                <strong>5 Bags</strong>
+              </div>
+            </div>
+            <div class="car-meta-bottom">
+              <div class="rate"><strong>$165</strong><span>per day / tax inc.</span></div>
+              <a href="#home" class="btn btn-secondary book-trigger" data-model="Veloce Sovereign V8 4WD">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+                Reserve
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Car 4: Veloce Nemesis GT Biturbo -->
+        <div class="car-box" data-category="Track Ready">
+          <div class="car-thumb">
+            <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=700&q=80" alt="Veloce Nemesis GT Biturbo">
+            <span class="badge-category">Track Ready</span>
+            <div class="rating-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              4.9 (51)
+            </div>
+          </div>
+          <div class="car-details">
+            <div class="car-title-row"><h3>Veloce Nemesis GT Biturbo</h3></div>
+            <p class="car-sub">Handbuilt 4.0L V8 Biturbo • Dynamic AWD</p>
+            <div class="car-specs">
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  Power
+                </span>
+                <strong>577 HP</strong>
+              </div>
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  0-100
+                </span>
+                <strong>3.1s</strong>
+              </div>
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24"></path><path d="m14.83 9.17 4.24-4.24"></path><path d="m14.83 14.83 4.24 4.24"></path><path d="m9.17 14.83-4.24 4.24"></path></svg>
+                  Drive
+                </span>
+                <strong>AWD</strong>
+              </div>
+            </div>
+            <div class="car-meta-bottom">
+              <div class="rate"><strong>$210</strong><span>per day / tax inc.</span></div>
+              <a href="#home" class="btn btn-secondary book-trigger" data-model="Veloce Nemesis GT Biturbo">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+                Reserve
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Car 5: Veloce Electra RS -->
+        <div class="car-box" data-category="Electric Flagship">
+          <div class="car-thumb">
+            <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=700&q=80" alt="Veloce Electra RS">
+            <span class="badge-category">EV Performance</span>
+            <div class="rating-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              5.0 (46)
+            </div>
+          </div>
+          <div class="car-details">
+            <div class="car-title-row"><h3>Veloce Electra RS</h3></div>
+            <p class="car-sub">800V Architecture • Overboost Launch Mode</p>
+            <div class="car-specs">
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  Power
+                </span>
+                <strong>750 HP</strong>
+              </div>
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  0-100
+                </span>
+                <strong>2.6s</strong>
+              </div>
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  Charge 80%
+                </span>
+                <strong>18 min</strong>
+              </div>
+            </div>
+            <div class="car-meta-bottom">
+              <div class="rate"><strong>$195</strong><span>per day / tax inc.</span></div>
+              <a href="#home" class="btn btn-secondary book-trigger" data-model="Veloce Electra RS">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+                Reserve
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Car 6: Veloce Monza Competition -->
+        <div class="car-box" data-category="Sports GT">
+          <div class="car-thumb">
+            <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=700&q=80" alt="Veloce Monza Competition">
+            <span class="badge-category">Grand Tourer</span>
+            <div class="rating-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              4.8 (33)
+            </div>
+          </div>
+          <div class="car-details">
+            <div class="car-title-row"><h3>Veloce Monza Competition</h3></div>
+            <p class="car-sub">TwinPower Turbo V8 • M xDrive Dynamic</p>
+            <div class="car-specs">
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  Power
+                </span>
+                <strong>617 HP</strong>
+              </div>
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  0-100
+                </span>
+                <strong>3.0s</strong>
+              </div>
+              <div class="spec-node">
+                <span class="spec-node-label">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                  Seats
+                </span>
+                <strong>5 Adult</strong>
+              </div>
+            </div>
+            <div class="car-meta-bottom">
+              <div class="rate"><strong>$175</strong><span>per day / tax inc.</span></div>
+              <a href="#home" class="btn btn-secondary book-trigger" data-model="Veloce Monza Competition">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+                Reserve
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       6. HOW IT WORKS
+  ========================================================= -->
+  <section class="section-hiw" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag-lead">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+          Simplicity First
+        </span>
+        <h2>How It Works</h2>
+        <p>Three straightforward milestones connecting you to the driver's seat with zero delay.</p>
+      </div>
+
+      <div class="hiw-stepped-grid">
+        <div class="hiw-step-card">
+          <div class="hiw-watermark-num">01</div>
+          <div class="hiw-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          </div>
+          <h3>Select & Reserve Online</h3>
+          <p>Browse telemetry specs, verify vehicle capabilities, and lock your exact vehicle with transparent, all-inclusive pricing.</p>
+        </div>
+
+        <div class="hiw-step-card">
+          <div class="hiw-watermark-num">02</div>
+          <div class="hiw-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          </div>
+          <h3>60-Second Digital KYC</h3>
+          <p>Verify your driver credentials in under a minute via encrypted facial recognition on your smartphone before departure.</p>
+        </div>
+
+        <div class="hiw-step-card">
+          <div class="hiw-watermark-num">03</div>
+          <div class="hiw-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <h3>NFC Tap & Drive</h3>
+          <p>Bypass the counter desk entirely. Walk directly to your bay and unlock with the digital key sent to your phone pass.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       7. CTA BANNER
+  ========================================================= -->
+  <section class="section-cta" id="cta">
+    <div class="container">
+      <div class="cta-box">
+        <div class="cta-content">
+          <h2>Ready to Experience Frictionless Travel?</h2>
+          <p>Book your preferred sports or luxury electric vehicle with guaranteed instant unlock and free 24-hour cancellation.</p>
+        </div>
+        <div class="cta-btns">
+          <a href="#home" class="btn btn-gold">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>
+            Reserve Now
+          </a>
+          <a href="tel:+18004567890" class="btn btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            Contact Concierge
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       8. PROCESS TIMELINE STEPS
+  ========================================================= -->
+  <section class="section-process" id="process">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag-lead">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line></svg>
+          Effortless Execution
+        </span>
+        <h2>Complete 4-Step Process</h2>
+        <p>Engineered systematically to remove airport counter queues, paperwork negotiations, and delays.</p>
+      </div>
+
+      <div class="process-timeline-elevated">
+        <div class="process-step-node">
+          <div class="process-step-header">
+            <div class="process-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
+            <span class="process-order-tag">Stage 01</span>
+          </div>
+          <h3>Select Dates & Model</h3>
+          <p>Choose from our meticulously maintained fleet with exact performance telemetry, luggage metrics, and transparent pricing.</p>
+        </div>
+
+        <div class="process-step-node">
+          <div class="process-step-header">
+            <div class="process-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            </div>
+            <span class="process-order-tag">Stage 02</span>
+          </div>
+          <h3>Digital KYC Approval</h3>
+          <p>Clear security checks remotely. Driver's license validation and biometric scans are finalized before flight arrival.</p>
+        </div>
+
+        <div class="process-step-node">
+          <div class="process-step-header">
+            <div class="process-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </div>
+            <span class="process-order-tag">Stage 03</span>
+          </div>
+          <h3>Keyless NFC Unlock</h3>
+          <p>Walk directly to your designated airport express bay or hotel drive and unlock doors automatically via Bluetooth pass.</p>
+        </div>
+
+        <div class="process-step-node">
+          <div class="process-step-header">
+            <div class="process-icon-box">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            </div>
+            <span class="process-order-tag">Stage 04</span>
+          </div>
+          <h3>Contactless Drop-off</h3>
+          <p>Park at designated Veloce bays, tap Complete in your app pass, and receive immediate digital fuel/battery checkout receipts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       9. FAQ
+  ========================================================= -->
+  <section class="section-faq" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag-lead">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          Common Inquiries
+        </span>
+        <h2>Frequently Asked Questions</h2>
+        <p>Clear answers to common questions regarding coverage, payments, and driving rules.</p>
+      </div>
+
+      <div class="faq-container">
+        <div class="faq-item">
+          <div class="faq-question">
+            What documents are needed to pick up a car?
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="faq-answer">
+            <p>You need a valid driver's license held for at least one year, an active credit card in the primary renter's name, and a passport or government photo ID for international travelers.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Is a security deposit held during the rental?
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="faq-answer">
+            <p>We perform a temporary pre-authorization hold ($200 to $500 depending on vehicle tier) which releases automatically upon safe return and vehicle check.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Can I return the vehicle to a different location?
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, one-way trips are supported across our airport and downtown hubs. Any applicable relocation surcharge calculates transparently at checkout.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            What is your electric vehicle charging policy?
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="faq-answer">
+            <p>Electric models include access to public fast-chargers. We simply ask to return the car with at least 20% battery remaining so our detailing crew can move the fleet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       10. COUNTER
+  ========================================================= -->
+  <section class="section-counter" id="counter">
+    <div class="container">
+      <div class="counter-grid">
+        <div class="counter-box">
+          <h3><span class="counter-val" data-target="150">0</span><span>+</span></h3>
+          <p>Premium Fleet Vehicles</p>
+        </div>
+        <div class="counter-box">
+          <h3><span class="counter-val" data-target="48">0</span><span>k</span></h3>
+          <p>Satisfied Expeditions</p>
+        </div>
+        <div class="counter-box">
+          <h3><span class="counter-val" data-target="24">0</span><span>/7</span></h3>
+          <p>Dedicated Concierge Hub</p>
+        </div>
+        <div class="counter-box">
+          <h3><span class="counter-val" data-target="99">0</span><span>%</span></h3>
+          <p>Positive Driver Ratings</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       11. LATEST ARTICLES
+  ========================================================= -->
+  <section class="section-articles" id="articles">
+    <div class="container">
+      <div class="section-header flex-header">
+        <div>
+          <span class="section-tag-lead">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Editorial Dispatch
+          </span>
+          <h2>The Veloce Journal</h2>
+          <p>Dispatches, EV roadmap tips, and automotive lifestyle guides from our test drivers.</p>
+        </div>
+      </div>
+
+      <div class="articles-grid">
+        <article class="article-card">
+          <div class="article-thumb-wrap">
+            <img src="https://images.unsplash.com/photo-1555353540-64580b51c258?auto=format&fit=crop&w=600&q=80" alt="Supercar test drive">
+            <span class="article-tag">Driving Guides</span>
+          </div>
+          <div class="article-content">
+            <div class="article-meta">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              Oct 12, 2026 • 5 min read
+            </div>
+            <h3 class="article-title">The Art of the Weekend Getaway: Mastering Rear-Engine Dynamics</h3>
+            <p class="article-excerpt">Practical tips on weight distribution, throttle modulation, and cold-tire handling for sports car drivers on coastal twisties.</p>
+            <a href="#articles" class="article-link">
+              Read Story
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <div class="article-thumb-wrap">
+            <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=600&q=80" alt="EV Fast Charging">
+            <span class="article-tag">EV Technology</span>
+          </div>
+          <div class="article-content">
+            <div class="article-meta">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              Sep 28, 2026 • 4 min read
+            </div>
+            <h3 class="article-title">Zero Range Anxiety: East Coast Supercharger Corridors Explained</h3>
+            <p class="article-excerpt">How modern 350kW public fast-chargers replenish 80% range in just 14 minutes between metropolitan hubs.</p>
+            <a href="#articles" class="article-link">
+              Read Story
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <div class="article-thumb-wrap">
+            <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=600&q=80" alt="NFC Keyless Entry">
+            <span class="article-tag">Tech & Mobile</span>
+          </div>
+          <div class="article-content">
+            <div class="article-meta">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              Sep 15, 2026 • 6 min read
+            </div>
+            <h3 class="article-title">Why Physical Rental Counters Are Becoming Obsolete</h3>
+            <p class="article-excerpt">Exploring how digital key fobs, encrypted NFC handshake tokens, and biometric identity vaults eliminate airport queues.</p>
+            <a href="#articles" class="article-link">
+              Read Story
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       12. TESTIMONIALS (CAROUSEL)
+  ========================================================= -->
+  <section class="section-testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag-lead">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          Verified Drivers
+        </span>
+        <h2>What Drivers Say</h2>
+        <p>Verified reviews from corporate executives, weekend travelers, and sports car enthusiasts.</p>
+      </div>
+
+      <div class="carousel-container">
+        <div class="carousel-viewport" id="carouselViewport">
+          <div class="carousel-track" id="testimonialTrack">
+            <!-- Slide 1 -->
+            <div class="carousel-slide">
+              <div class="testimonial-card-premium">
+                <div>
+                  <div class="review-stars">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                  </div>
+                  <p class="review-text">"Seamless JFK arrival. Vehicle unlocked immediately from the app without wasting 45 minutes at rental desks. Clean and pristine interior."</p>
+                </div>
+                <div class="reviewer-meta">
+                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Sarah Jenkins" class="reviewer-avatar">
+                  <div class="reviewer-info">
+                    <strong>Sarah Jenkins</strong>
+                    <span>Product Lead, Stripe</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-slide">
+              <div class="testimonial-card-premium">
+                <div>
+                  <div class="review-stars">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                  </div>
+                  <p class="review-text">"The Veloce GT3 was tuned to absolute factory perfection. Outstanding support team when I needed to extend rental duration mid-trip."</p>
+                </div>
+                <div class="reviewer-meta">
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="David Kross" class="reviewer-avatar">
+                  <div class="reviewer-info">
+                    <strong>David Kross</strong>
+                    <span>Private Investor</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="carousel-slide">
+              <div class="testimonial-card-premium">
+                <div>
+                  <div class="review-stars">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                  </div>
+                  <p class="review-text">"Honest pricing is hard to find in luxury rentals. Zero hidden excess or insurance surprises on checkout. Highly recommended."</p>
+                </div>
+                <div class="reviewer-meta">
+                  <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="Marcus Sterling" class="reviewer-avatar">
+                  <div class="reviewer-info">
+                    <strong>Marcus Sterling</strong>
+                    <span>Managing Director</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="carousel-slide">
+              <div class="testimonial-card-premium">
+                <div>
+                  <div class="review-stars">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                  </div>
+                  <p class="review-text">"The private chauffeur service in Manhattan was discreet, impeccably punctual, and effortless. True white-glove experience."</p>
+                </div>
+                <div class="reviewer-meta">
+                  <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=120&q=80" alt="Elena Rostova" class="reviewer-avatar">
+                  <div class="reviewer-info">
+                    <strong>Elena Rostova</strong>
+                    <span>Partner, Apex Capital</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-controls">
+          <button class="carousel-arrow" id="prevBtn" aria-label="Previous review">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <div class="carousel-dots" id="carouselDots"></div>
+          <button class="carousel-arrow" id="nextBtn" aria-label="Next review">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       13. FOOTER
+  ========================================================= -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <a href="#home" class="footer-logo">
+          <span class="logo-badge" style="width: 32px; height: 32px; font-size: 15px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </span>
+          VELOCE
+        </a>
+        <p class="footer-desc">
+          Crafting exceptional rental journeys across North America and Europe. Instant roadside lock, zero excess options, and elite concierge support.
+        </p>
+        <div class="social-links">
+          <a href="#" class="social-btn" aria-label="Twitter">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="LinkedIn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="Instagram">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Vehicles & Fleet</h4>
+        <ul class="footer-links">
+          <li>
+            <a href="#fleets">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              Sports Cars & Coupes
+            </a>
+          </li>
+          <li>
+            <a href="#fleets">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              Electric Fleet (EV)
+            </a>
+          </li>
+          <li>
+            <a href="#fleets">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              Luxury Executive SUVs
+            </a>
+          </li>
+          <li>
+            <a href="#services">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              Chauffeur Service
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support & Policy</h4>
+        <ul class="footer-links">
+          <li>
+            <a href="#about">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              Rental Guidelines
+            </a>
+          </li>
+          <li>
+            <a href="#how-it-works">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              Comprehensive Cover
+            </a>
+          </li>
+          <li>
+            <a href="#faq">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              Charging Policy
+            </a>
+          </li>
+          <li>
+            <a href="#faq">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              Help Center & FAQ
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 4th Column: Office & Concierge Hub -->
+      <div class="footer-col">
+        <h4>Headquarters & Concierge</h4>
+        <p class="footer-desc" style="margin-bottom: 14px;">Direct line to client operations and private airside logistics.</p>
+        <ul class="footer-contact-list">
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>750 Lexington Ave, 24th Fl, New York, NY 10022</span>
+          </li>
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <a href="tel:+18004567890">+1 (800) 456-7890</a>
+          </li>
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <a href="mailto:concierge@velocefleet.com">concierge@velocefleet.com</a>
+          </li>
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>Mon - Sun: 24/7 Priority Dispatch</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div>&copy; 2026 Veloce Fleet Technologies Inc. All rights reserved.</div>
+        <div class="footer-legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Security Protocol</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       JAVASCRIPT INTERACTIONS (100% POPUP-FREE)
+  ========================================================= -->
+  <script>
+    // 1. Mobile Drawer Navigation
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+    const closeDrawerLinks = document.querySelectorAll('.close-drawer');
+
+    function toggleMobileDrawer(open) {
+      if (open) {
+        mobileDrawer.classList.add('open');
+        drawerOverlay.classList.add('open');
+        mobileMenuBtn.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileDrawer.classList.remove('open');
+        drawerOverlay.classList.remove('open');
+        mobileMenuBtn.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    mobileMenuBtn.addEventListener('click', () => {
+      const isOpen = mobileDrawer.classList.contains('open');
+      toggleMobileDrawer(!isOpen);
+    });
+
+    drawerOverlay.addEventListener('click', () => toggleMobileDrawer(false));
+    closeDrawerLinks.forEach(link => {
+      link.addEventListener('click', () => toggleMobileDrawer(false));
+    });
+
+    // Mobile Accordion Submenus
+    const submenuToggles = document.querySelectorAll('.mobile-submenu-toggle');
+    submenuToggles.forEach(toggle => {
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const targetId = toggle.getAttribute('data-target');
+        const submenu = document.getElementById(targetId);
+        const isOpen = submenu.classList.contains('open');
+
+        document.querySelectorAll('.mobile-submenu').forEach(sm => sm.classList.remove('open'));
+        document.querySelectorAll('.mobile-submenu-toggle svg').forEach(svg => svg.style.transform = 'rotate(0deg)');
+
+        if (!isOpen) {
+          submenu.classList.add('open');
+          toggle.querySelector('svg').style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+
+    // 2. Hero Search Dates & Real-Time Duration Sync
+    const dateInInput = document.getElementById('searchDateIn');
+    const dateOutInput = document.getElementById('searchDateOut');
+    const liveScopeDays = document.getElementById('liveScopeDays');
+
+    const today = new Date();
+    const plus3 = new Date();
+    plus3.setDate(today.getDate() + 3);
+
+    dateInInput.value = today.toISOString().split('T')[0];
+    dateOutInput.value = plus3.toISOString().split('T')[0];
+    dateInInput.min = today.toISOString().split('T')[0];
+    dateOutInput.min = today.toISOString().split('T')[0];
+
+    function updateScopeDays() {
+      const start = new Date(dateInInput.value);
+      const end = new Date(dateOutInput.value);
+      const diffTime = end - start;
+      const diffDays = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
+      liveScopeDays.textContent = `${diffDays} Day${diffDays > 1 ? 's' : ''} Selected`;
+    }
+
+    dateInInput.addEventListener('change', () => {
+      if (new Date(dateOutInput.value) <= new Date(dateInInput.value)) {
+        const nextDay = new Date(dateInInput.value);
+        nextDay.setDate(nextDay.getDate() + 1);
+        dateOutInput.value = nextDay.toISOString().split('T')[0];
+      }
+      dateOutInput.min = dateInInput.value;
+      updateScopeDays();
+    });
+
+    dateOutInput.addEventListener('change', updateScopeDays);
+
+    document.getElementById('heroSearchForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('fleets').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // 3. Live Fleet Category Filtering
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const carBoxes = document.querySelectorAll('#fleetGridContainer .car-box');
+
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        filterTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const filterCategory = tab.getAttribute('data-filter');
+        carBoxes.forEach(box => {
+          const itemCat = box.getAttribute('data-category');
+          if (filterCategory === 'all' || itemCat === filterCategory) {
+            box.style.display = 'flex';
+          } else {
+            box.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // 4. Smooth Anchor to Reservation Focus
+    document.querySelectorAll('.book-trigger').forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        const modelName = trigger.getAttribute('data-model');
+        const heroModule = document.getElementById('home');
+        heroModule.scrollIntoView({ behavior: 'smooth' });
+        
+        // Brief highlight pulse on the search card
+        const card = document.querySelector('.hero-dispatch-card');
+        card.style.boxShadow = '0 0 0 2px var(--gold-primary), var(--shadow-floating)';
+        setTimeout(() => {
+          card.style.boxShadow = '';
+        }, 1200);
+      });
+    });
+
+    // 5. FAQ Accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const q = item.querySelector('.faq-question');
+      const a = item.querySelector('.faq-answer');
+
+      q.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        faqItems.forEach(other => {
+          other.classList.remove('open');
+          other.querySelector('.faq-answer').style.maxHeight = null;
+        });
+
+        if (!isOpen) {
+          item.classList.add('open');
+          a.style.maxHeight = a.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // 6. Counter Animation via IntersectionObserver
+    let animated = false;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !animated) {
+          animated = true;
+          document.querySelectorAll('.counter-val').forEach(el => {
+            const target = +el.getAttribute('data-target');
+            let count = 0;
+            const step = Math.ceil(target / 40);
+            const timer = setInterval(() => {
+              count += step;
+              if (count >= target) {
+                el.textContent = target;
+                clearInterval(timer);
+              } else {
+                el.textContent = count;
+              }
+            }, 30);
+          });
+        }
+      });
+    }, { threshold: 0.25 });
+
+    const counterSection = document.getElementById('counter');
+    if (counterSection) observer.observe(counterSection);
+
+    // 7. Testimonial Carousel (Touch & Drag Controller)
+    const track = document.getElementById('testimonialTrack');
+    const viewport = document.getElementById('carouselViewport');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsContainer = document.getElementById('carouselDots');
+    
+    let currentIndex = 0;
+    let startX = 0;
+    let isSwiping = false;
+
+    function getVisibleSlides() {
+      if (window.innerWidth >= 1024) return 3;
+      if (window.innerWidth >= 768) return 2;
+      return 1;
+    }
+
+    function getMaxIndex() {
+      return Math.max(0, slides.length - getVisibleSlides());
+    }
+
+    function createDots() {
+      dotsContainer.innerHTML = '';
+      const maxIndex = getMaxIndex();
+      for (let i = 0; i <= maxIndex; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('carousel-dot');
+        if (i === currentIndex) dot.classList.add('active');
+        dot.setAttribute('aria-label', `Navigate to review page ${i + 1}`);
+        dot.addEventListener('click', () => {
+          currentIndex = i;
+          updateCarousel();
+        });
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    function updateCarousel() {
+      const slideWidthPercentage = 100 / getVisibleSlides();
+      track.style.transform = `translateX(-${currentIndex * slideWidthPercentage}%)`;
+      
+      const dots = document.querySelectorAll('.carousel-dot');
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === currentIndex);
+      });
+    }
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = currentIndex > 0 ? currentIndex - 1 : getMaxIndex();
+      updateCarousel();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = currentIndex < getMaxIndex() ? currentIndex + 1 : 0;
+      updateCarousel();
+    });
+
+    // Touch & Swipe Support
+    viewport.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      isSwiping = true;
+    }, { passive: true });
+
+    viewport.addEventListener('touchend', (e) => {
+      if (!isSwiping) return;
+      const endX = e.changedTouches[0].clientX;
+      const diff = startX - endX;
+      if (Math.abs(diff) > 40) {
+        if (diff > 0 && currentIndex < getMaxIndex()) {
+          currentIndex++;
+        } else if (diff < 0 && currentIndex > 0) {
+          currentIndex--;
+        }
+        updateCarousel();
+      }
+      isSwiping = false;
+    });
+
+    window.addEventListener('resize', () => {
+      if (currentIndex > getMaxIndex()) currentIndex = getMaxIndex();
+      createDots();
+      updateCarousel();
+    });
+
+    createDots();
+    updateCarousel();
+  </script>
+</body>
+</html>

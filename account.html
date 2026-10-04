@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Client Dashboard & Dossier Portal | Veloce Prestige Fleet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. BESPOKE PRESTIGE DESIGN TOKENS (LIGHT LUXURY)
+       ========================================================================== */
+    :root {
+      --gold-primary: #b88e1e;
+      --gold-hover: #9c7713;
+      --gold-light: #fef9e8;
+      --gold-border: rgba(184, 142, 30, 0.28);
+      --gold-glow: rgba(184, 142, 30, 0.18);
+
+      --carbon-950: #0a0d14;
+      --carbon-900: #111520;
+      --carbon-800: #1b202e;
+      --carbon-700: #2d3548;
+
+      --text-main: #0c0f17;
+      --text-muted: #525a6c;
+      --text-subtle: #8a94a6;
+
+      --surface-body: #f8f9fb;
+      --surface-card: #ffffff;
+      --surface-card-subtle: #f1f3f7;
+
+      --line-subtle: rgba(12, 15, 23, 0.08);
+      --line-medium: rgba(12, 15, 23, 0.12);
+
+      --accent-green: #0d9488;
+      --accent-green-bg: #f0fdfa;
+      --warning-gold: #d97706;
+
+      --font-display: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+
+      --radius-xs: 6px;
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+
+      --shadow-ambient: 0 4px 20px -2px rgba(12, 15, 23, 0.04), 0 1px 3px rgba(12, 15, 23, 0.02);
+      --shadow-elevated: 0 16px 36px -8px rgba(12, 15, 23, 0.08), 0 4px 12px -2px rgba(12, 15, 23, 0.03);
+      --shadow-floating: 0 24px 50px -12px rgba(12, 15, 23, 0.12), 0 0 0 1px rgba(12, 15, 23, 0.05);
+
+      --ease-luxury: cubic-bezier(0.19, 1, 0.22, 1);
+      --transition-fast: 0.22s var(--ease-luxury);
+      --transition-base: 0.35s var(--ease-luxury);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--surface-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      padding-bottom: calc(74px + env(safe-area-inset-bottom));
+      background-image: 
+        radial-gradient(1200px 500px at 100% 0%, rgba(184, 142, 30, 0.04) 0%, transparent 70%),
+        radial-gradient(900px 400px at 0% 40%, rgba(13, 148, 136, 0.03) 0%, transparent 60%);
+      background-attachment: fixed;
+    }
+
+    @media (min-width: 992px) {
+      body { padding-bottom: 0; }
+    }
+
+    img { display: block; max-width: 100%; }
+    svg { display: inline-block; vertical-align: middle; flex-shrink: 0; }
+
+    .container {
+      width: 100%;
+      max-width: 1260px;
+      margin-inline: auto;
+      padding-inline: clamp(20px, 4vw, 32px);
+    }
+
+    /* BUTTONS */
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 12px 24px;
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition-base);
+      border: 1px solid transparent;
+      outline: none;
+      min-height: 48px;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--carbon-950);
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(10, 13, 20, 0.22);
+    }
+    .btn-primary:hover {
+      background: var(--carbon-800);
+      box-shadow: 0 8px 24px rgba(10, 13, 20, 0.28);
+      transform: translateY(-2px);
+      color: #ffffff;
+    }
+
+    .btn-secondary {
+      background: var(--surface-card);
+      color: var(--carbon-900);
+      border-color: var(--line-medium);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+    .btn-secondary:hover {
+      background: var(--surface-card-subtle);
+      border-color: rgba(12, 15, 23, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .btn-danger-outline {
+      background: transparent;
+      color: #dc2626;
+      border: 1px solid rgba(220, 38, 38, 0.25);
+    }
+    .btn-danger-outline:hover {
+      background: #fef2f2;
+      border-color: #dc2626;
+    }
+
+    /* =========================================================
+       2. TOPBAR & NAVIGATION
+    ========================================================= */
+    .topbar {
+      background: var(--carbon-950);
+      color: var(--text-subtle);
+      font-size: 12px;
+      font-weight: 500;
+      padding-block: 9px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .topbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .topbar-left, .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .topbar-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #9ba4b5;
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .topbar-item:hover { color: #ffffff; }
+    .topbar-divider { width: 1px; height: 12px; background: rgba(255, 255, 255, 0.15); }
+
+    header {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--line-subtle);
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 78px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      text-decoration: none;
+      letter-spacing: -0.03em;
+    }
+    .logo-badge {
+      background: var(--carbon-950);
+      color: var(--gold-primary);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(184, 142, 30, 0.35);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .nav-menu {
+      display: none;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+    @media (min-width: 992px) {
+      .nav-menu { display: flex; }
+    }
+    .nav-link {
+      font-weight: 600;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding-block: 10px;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--carbon-950); }
+
+    .nav-actions { display: none; align-items: center; gap: 12px; }
+    @media (min-width: 992px) {
+      .nav-actions { display: flex; }
+    }
+
+    .hamburger-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      background: transparent;
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      padding: 8px;
+    }
+    .hamburger-btn span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background-color: var(--carbon-950);
+      border-radius: var(--radius-full);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .hamburger-btn.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-btn.active span:nth-child(2) { opacity: 0; }
+    .hamburger-btn.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (min-width: 992px) {
+      .hamburger-btn { display: none; }
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 13, 20, 0.45);
+      backdrop-filter: blur(6px);
+      z-index: 1050;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition-fast);
+    }
+    .mobile-drawer-overlay.open { opacity: 1; visibility: visible; }
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 86%;
+      max-width: 330px;
+      height: 100%;
+      background: var(--surface-card);
+      z-index: 1060;
+      box-shadow: -15px 0 35px rgba(0, 0, 0, 0.08);
+      transform: translateX(100%);
+      transition: transform var(--transition-base);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 24px 22px 90px;
+    }
+    .mobile-drawer.open { transform: translateX(0); }
+    .mobile-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line-subtle);
+    }
+    .mobile-nav-list { list-style: none; display: flex; flex-direction: column; }
+    .mobile-nav-item { border-bottom: 1px solid var(--surface-card-subtle); }
+    .mobile-nav-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 4px;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--carbon-950);
+      text-decoration: none;
+    }
+
+    /* Mobile Bottom Quick-Action Bar */
+    .mobile-bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--line-medium);
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      display: flex;
+      gap: 10px;
+      z-index: 990;
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+    }
+    @media (min-width: 992px) {
+      .mobile-bottom-bar { display: none; }
+    }
+    .mobile-bottom-bar .btn { flex: 1; min-height: 44px; padding: 8px 12px; font-size: 13.5px; }
+
+    /* =========================================================
+       3. ACCOUNT DASHBOARD HEADER
+    ========================================================= */
+    .dashboard-header {
+      padding-top: clamp(32px, 5vw, 52px);
+      padding-bottom: clamp(24px, 4vw, 36px);
+      border-bottom: 1px solid var(--line-subtle);
+      background: var(--surface-card);
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-subtle);
+      margin-bottom: 12px;
+    }
+    .breadcrumb a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .breadcrumb a:hover { color: var(--carbon-950); }
+
+    .dash-user-row {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    @media (min-width: 768px) {
+      .dash-user-row {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+    .user-profile-identity {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .user-avatar-initials {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--carbon-950);
+      color: var(--gold-primary);
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(184, 142, 30, 0.4);
+      box-shadow: var(--shadow-ambient);
+    }
+    .user-info h1 {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 3.5vw, 32px);
+      font-weight: 800;
+      color: var(--carbon-950);
+      letter-spacing: -0.02em;
+    }
+    .user-info p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .membership-tier-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gold-light);
+      border: 1px solid var(--gold-border);
+      color: var(--gold-hover);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* =========================================================
+       4. DASHBOARD SPLIT LAYOUT (SIDEBAR TABS + CONTENT PANES)
+    ========================================================= */
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding-block: clamp(32px, 5vw, 60px);
+    }
+    @media (min-width: 992px) {
+      .dashboard-layout {
+        grid-template-columns: 280px 1fr;
+        gap: 36px;
+        align-items: start;
+      }
+    }
+
+    /* Sidebar Tab Menu */
+    .dash-sidebar {
+      background: var(--surface-card);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      box-shadow: var(--shadow-ambient);
+      position: sticky;
+      top: 98px;
+    }
+    .dash-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .dash-nav-btn {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      padding: 12px 16px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: var(--transition-fast);
+    }
+    .dash-nav-btn svg { color: var(--text-subtle); transition: color var(--transition-fast); }
+    .dash-nav-btn:hover {
+      background: var(--surface-card-subtle);
+      color: var(--carbon-950);
+    }
+    .dash-nav-btn.active {
+      background: var(--carbon-950);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(10, 13, 20, 0.15);
+    }
+    .dash-nav-btn.active svg { color: var(--gold-primary); }
+
+    /* Dashboard Content Panes */
+    .dash-content-area {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .dash-pane {
+      display: none;
+    }
+    .dash-pane.active {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .pane-card {
+      background: var(--surface-card);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-lg);
+      padding: clamp(24px, 3.5vw, 36px);
+      box-shadow: var(--shadow-ambient);
+    }
+    .pane-title {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--carbon-950);
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+    .pane-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+
+    /* Active Reservation Card */
+    .reservation-ticket-box {
+      background: var(--surface-card-subtle);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    @media (min-width: 640px) {
+      .reservation-ticket-box {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+    .ticket-left {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .ticket-thumb {
+      width: 88px;
+      height: 64px;
+      border-radius: var(--radius-xs);
+      overflow: hidden;
+      background: var(--carbon-950);
+      flex-shrink: 0;
+    }
+    .ticket-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .ticket-info h4 {
+      font-family: var(--font-display);
+      font-size: 16.5px;
+      font-weight: 800;
+      color: var(--carbon-950);
+    }
+    .ticket-info span {
+      display: block;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .ticket-meta-pills {
+      display: inline-flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .mini-status-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      background: var(--accent-green-bg);
+      color: var(--accent-green);
+      border: 1px solid rgba(13, 148, 136, 0.25);
+    }
+
+    /* Form Inputs inside Account Settings */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 600px) {
+      .form-grid { grid-template-columns: repeat(2, 1fr); }
+      .col-span-full { grid-column: span 2; }
+    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label {
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--carbon-900);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .input-shell {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-shell svg {
+      position: absolute;
+      left: 14px;
+      color: var(--text-subtle);
+      pointer-events: none;
+      transition: color var(--transition-fast);
+    }
+    .input-control {
+      width: 100%;
+      height: 48px;
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-sm);
+      padding-left: 42px;
+      padding-right: 14px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--carbon-950);
+      background: var(--surface-card-subtle);
+      outline: none;
+      transition: var(--transition-fast);
+    }
+    .input-control:focus {
+      border-color: var(--carbon-950);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(12, 15, 23, 0.08);
+    }
+    .input-control:focus + svg { color: var(--carbon-950); }
+
+    /* Checkbox & Toggle Cards */
+    .preference-toggle-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: var(--surface-card-subtle);
+      border: 1px solid var(--line-medium);
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+    }
+    .preference-info strong {
+      display: block;
+      font-size: 13.5px;
+      color: var(--carbon-950);
+      font-weight: 700;
+    }
+    .preference-info span {
+      display: block;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .slider-track {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: var(--line-medium);
+      transition: var(--transition-fast);
+      border-radius: var(--radius-full);
+    }
+    .slider-track::before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: var(--transition-fast);
+      border-radius: 50%;
+    }
+    input:checked + .slider-track { background-color: var(--carbon-950); }
+    input:checked + .slider-track::before { transform: translateX(20px); }
+
+    /* Inline Alert Banner (Zero Popups) */
+    .account-alert-banner {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-green-bg);
+      border: 1px solid rgba(13, 148, 136, 0.3);
+      color: var(--accent-green);
+      font-size: 13.5px;
+      font-weight: 700;
+      margin-top: 16px;
+    }
+    .account-alert-banner.show { display: flex; }
+
+    /* =========================================================
+       5. FOOTER
+    ========================================================= */
+    footer {
+      background: var(--carbon-950);
+      color: #9ba4b5;
+      padding-top: 60px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 36px;
+      margin-bottom: 40px;
+    }
+    @media (min-width: 576px) {
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 992px) {
+      .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1.3fr; gap: 40px; }
+    }
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+      text-decoration: none;
+      margin-bottom: 12px;
+    }
+    .footer-desc { font-size: 13.5px; line-height: 1.6; margin-bottom: 18px; color: #9ba4b5; }
+    .social-links { display: flex; gap: 10px; }
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: var(--transition-fast);
+    }
+    .social-btn:hover {
+      background: var(--gold-primary);
+      color: #ffffff;
+      border-color: var(--gold-primary);
+    }
+    .footer-col h4 {
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      color: #9ba4b5;
+      text-decoration: none;
+      font-size: 13.5px;
+      transition: color var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-links a:hover { color: #ffffff; }
+
+    .footer-contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13.5px;
+      color: #9ba4b5;
+    }
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .footer-contact-item svg {
+      color: var(--gold-primary);
+      margin-top: 3px;
+    }
+    .footer-contact-item a {
+      color: #9ba4b5;
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .footer-contact-item a:hover { color: #ffffff; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 20px 0;
+      font-size: 12.5px;
+      color: var(--text-subtle);
+    }
+    .footer-bottom .container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .footer-bottom .container {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+    .footer-legal-links { display: flex; justify-content: center; gap: 16px; }
+    .footer-legal-links a { color: var(--text-subtle); text-decoration: none; transition: color var(--transition-fast); }
+    .footer-legal-links a:hover { color: #ffffff; }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================
+       1. TOPBAR & AIRSIDE NAVBAR
+  ========================================================= -->
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <a href="tel:+18004567890" class="topbar-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          Direct Concierge Line: +1 (800) 456-7890
+        </a>
+        <div class="topbar-divider"></div>
+        <span class="topbar-item" style="display: none; @media(min-width: 600px){display:inline-flex;}">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Encrypted Client Dashboard
+        </span>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-item" style="color: #ffffff; font-weight: 700;">USD ($) / Global Currency Tier</span>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="container navbar">
+      <a href="index.html" class="logo">
+        <span class="logo-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        </span>
+        VELOCE
+      </a>
+
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+        <li class="nav-item"><a href="index.html#services" class="nav-link">Services</a></li>
+        <li class="nav-item"><a href="cars.html" class="nav-link">Our Fleets</a></li>
+        <li class="nav-item"><a href="account.html" class="nav-link active">My Account</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="cars.html" class="btn btn-secondary">Book Another Ride</a>
+        <a href="contact.html" class="btn btn-primary">Concierge Support</a>
+      </div>
+
+      <button class="hamburger-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer-overlay" id="drawerOverlay"></div>
+  <aside class="mobile-drawer" id="mobileDrawer">
+    <div class="mobile-drawer-header">
+      <a href="index.html" class="logo" style="font-size: 20px;">
+        <span class="logo-badge" style="width: 32px; height: 32px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        </span>
+        VELOCE
+      </a>
+    </div>
+
+    <ul class="mobile-nav-list">
+      <li class="mobile-nav-item"><a href="index.html" class="mobile-nav-link close-drawer">Home</a></li>
+      <li class="mobile-nav-item"><a href="about.html" class="mobile-nav-link close-drawer">About Us</a></li>
+      <li class="mobile-nav-item"><a href="index.html#services" class="mobile-nav-link close-drawer">Services</a></li>
+      <li class="mobile-nav-item"><a href="cars.html" class="mobile-nav-link close-drawer">Our Fleets</a></li>
+      <li class="mobile-nav-item"><a href="account.html" class="mobile-nav-link close-drawer" style="color: var(--gold-primary);">My Account</a></li>
+      <li class="mobile-nav-item"><a href="contact.html" class="mobile-nav-link close-drawer">Contact</a></li>
+    </ul>
+
+    <div class="mobile-drawer-actions">
+      <a href="cars.html" class="btn btn-primary close-drawer" style="width: 100%;">Book Another Ride</a>
+      <a href="tel:+18004567890" class="btn btn-secondary" style="width: 100%;">Call Operations</a>
+    </div>
+  </aside>
+
+  <!-- Mobile Fixed Bottom Action Bar -->
+  <div class="mobile-bottom-bar">
+    <a href="tel:+18004567890" class="btn btn-secondary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      Call
+    </a>
+    <a href="contact.html" class="btn btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+      Concierge
+    </a>
+  </div>
+
+  <!-- =========================================================
+       3. ACCOUNT HEADER & IDENTITY
+  ========================================================= -->
+  <section class="dashboard-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span style="color: var(--carbon-950);">Client Dashboard</span>
+      </div>
+
+      <div class="dash-user-row">
+        <div class="user-profile-identity">
+          <div class="user-avatar-initials">AV</div>
+          <div class="user-info">
+            <h1>Alexander Vance</h1>
+            <p>Member ID: VEL-8842-NY &bull; vance@familyoffice.com</p>
+          </div>
+        </div>
+
+        <div>
+          <span class="membership-tier-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            Sovereign Black Tier Member
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       4. DASHBOARD SPLIT LAYOUT (SIDEBAR TABS + CONTENT PANES)
+  ========================================================= -->
+  <div class="container">
+    <div class="dashboard-layout">
+
+      <!-- LEFT SIDEBAR TAB NAVIGATION -->
+      <aside class="dash-sidebar">
+        <nav>
+          <ul class="dash-nav-list">
+            <li>
+              <button class="dash-nav-btn active" data-target="reservationsPane">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                Active & Past Reservations
+              </button>
+            </li>
+            <li>
+              <button class="dash-nav-btn" data-target="keysPane">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+                Digital NFC Passes
+              </button>
+            </li>
+            <li>
+              <button class="dash-nav-btn" data-target="walletPane">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                Saved Cards & Billing
+              </button>
+            </li>
+            <li>
+              <button class="dash-nav-btn" data-target="preferencesPane">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                Vehicle & Cabin Preferences
+              </button>
+            </li>
+            <li>
+              <button class="dash-nav-btn" data-target="securityPane">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                Security & Biometric Logs
+              </button>
+            </li>
+            <li>
+              <button class="dash-nav-btn" data-target="settingsPane">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                Driver Profile & KYC
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- RIGHT MAIN CONTENT PANES -->
+      <main class="dash-content-area">
+
+        <!-- PANE 1: RESERVATIONS -->
+        <div class="dash-pane active" id="reservationsPane">
+          <div class="pane-card">
+            <h3 class="pane-title">Active Fleet Allocation</h3>
+            <p class="pane-subtitle">Your currently staged vehicle ready for handover.</p>
+
+            <div class="reservation-ticket-box">
+              <div class="ticket-left">
+                <div class="ticket-thumb">
+                  <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=300&q=80" alt="Veloce GT3">
+                </div>
+                <div class="ticket-info">
+                  <h4>Veloce GT3 Coupé</h4>
+                  <span>JFK Signature Aviation FBO &bull; Oct 12 – 15</span>
+                  <div class="ticket-meta-pills">
+                    <span class="mini-status-tag">Ready for Handover</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <a href="checkout.html" class="btn btn-primary" style="min-height: 40px; padding: 8px 18px; font-size: 13px;">
+                  View Dossier
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="pane-card">
+            <h3 class="pane-title">Expedition Archive</h3>
+            <p class="pane-subtitle">Past completed journeys and digital invoices.</p>
+
+            <div style="font-size: 13.5px; color: var(--text-muted); display: flex; flex-direction: column; gap: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: var(--surface-card-subtle); border-radius: var(--radius-xs);">
+                <div>
+                  <strong>Veloce Apex-S Plaid</strong>
+                  <span style="display: block; font-size: 12px; color: var(--text-subtle);">Silicon Valley SJC &bull; Sep 02 - Sep 06 (4 Days)</span>
+                </div>
+                <span style="font-weight: 700; color: var(--carbon-950);">$596.00</span>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: var(--surface-card-subtle); border-radius: var(--radius-xs);">
+                <div>
+                  <strong>Veloce Sovereign V8 4WD</strong>
+                  <span style="display: block; font-size: 12px; color: var(--text-subtle);">Manhattan Midtown &bull; Aug 14 - Aug 17 (3 Days)</span>
+                </div>
+                <span style="font-weight: 700; color: var(--carbon-950);">$495.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANE 2: DIGITAL NFC PASSES -->
+        <div class="dash-pane" id="keysPane">
+          <div class="pane-card">
+            <h3 class="pane-title">Encrypted Smartphone Keys</h3>
+            <p class="pane-subtitle">Active Bluetooth & NFC handshake tokens for touchless vehicle release.</p>
+
+            <div style="background: linear-gradient(135deg, #0a0d14 0%, #151a27 100%); border-radius: var(--radius-md); padding: 24px; color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.1);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--gold-primary);">PRIMARY PASS</span>
+                <span style="font-size: 11px; font-weight: 700; color: var(--accent-green);">● Active & Ready</span>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 18px; letter-spacing: 0.2em; margin-bottom: 12px;">VEL-992-GT3G-NFC</div>
+              <div style="font-size: 12.5px; color: #94a3b8;">Associated Vehicle: Veloce GT3 Coupé &bull; Bay 12</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANE 3: SAVED CARDS & BILLING -->
+        <div class="dash-pane" id="walletPane">
+          <div class="pane-card">
+            <h3 class="pane-title">Payment Methods</h3>
+            <p class="pane-subtitle">Manage default corporate and personal cards.</p>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; border: 1px solid var(--line-medium); border-radius: var(--radius-sm); background: var(--surface-card-subtle); margin-bottom: 16px;">
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                <div>
+                  <strong>Visa ending in 8821</strong>
+                  <span style="display: block; font-size: 12px; color: var(--text-subtle);">Expires 08/28 &bull; Default Tier</span>
+                </div>
+              </div>
+              <span style="font-size: 12px; font-weight: 700; color: var(--accent-green);">Verified</span>
+            </div>
+
+            <button class="btn btn-secondary" style="width: 100%;">+ Add New Payment Method</button>
+          </div>
+        </div>
+
+        <!-- PANE 4: VEHICLE & CABIN PREFERENCES -->
+        <div class="dash-pane" id="preferencesPane">
+          <div class="pane-card">
+            <h3 class="pane-title">Default Vehicle & Cabin Settings</h3>
+            <p class="pane-subtitle">Applied automatically whenever a vehicle is staged for your arrival.</p>
+
+            <div class="preference-toggle-card">
+              <div class="preference-info">
+                <strong>Pre-Cool Cabin Temperature (68°F / 20°C)</strong>
+                <span>Air conditioning active 15 minutes prior to your arrival at bay.</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="slider-track"></span>
+              </label>
+            </div>
+
+            <div class="preference-toggle-card">
+              <div class="preference-info">
+                <strong>Radio & Acoustic Preset: SiriusXM Master Audio</strong>
+                <span>Syncs custom EQ profiles to cockpit entertainment upon NFC unlock.</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="slider-track"></span>
+              </label>
+            </div>
+
+            <div class="preference-toggle-card">
+              <div class="preference-info">
+                <strong>Zero Security Deposit Hold Exemption</strong>
+                <span>Bypass temporary credit card holds based on Sovereign Black Tier standing.</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" checked>
+                <span class="slider-track"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANE 5: SECURITY & BIOMETRIC LOGS -->
+        <div class="dash-pane" id="securityPane">
+          <div class="pane-card">
+            <h3 class="pane-title">Security & Biometric Handshake Logs</h3>
+            <p class="pane-subtitle">Recent encrypted device handshakes and facial KYC authentications.</p>
+
+            <div style="font-size: 13px; color: var(--text-muted); display: flex; flex-direction: column; gap: 10px;">
+              <div style="padding: 12px; background: var(--surface-card-subtle); border-radius: var(--radius-xs); display: flex; justify-content: space-between;">
+                <div>
+                  <strong>FaceID Biometric Clearance</strong>
+                  <span style="display: block; font-size: 11.5px; color: var(--text-subtle);">iPhone 17 Pro &bull; New York, NY</span>
+                </div>
+                <span style="font-size: 12px; font-weight: 700; color: var(--accent-green);">Today, 10:42 AM</span>
+              </div>
+
+              <div style="padding: 12px; background: var(--surface-card-subtle); border-radius: var(--radius-xs); display: flex; justify-content: space-between;">
+                <div>
+                  <strong>NFC Digital Key Token Issued</strong>
+                  <span style="display: block; font-size: 11.5px; color: var(--text-subtle);">Apple Wallet Pass Sync</span>
+                </div>
+                <span style="font-size: 12px; font-weight: 700; color: var(--text-muted);">Oct 10, 2026</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANE 6: DRIVER PROFILE & KYC -->
+        <div class="dash-pane" id="settingsPane">
+          <div class="pane-card">
+            <h3 class="pane-title">Driver Profile & KYC Verification</h3>
+            <p class="pane-subtitle">Manage biometrics, contact coordinates, and license jurisdiction.</p>
+
+            <form id="accountSettingsForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="accFirstName">First Name</label>
+                  <div class="input-shell">
+                    <input type="text" class="input-control" id="accFirstName" value="Alexander" required>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="accLastName">Last Name</label>
+                  <div class="input-shell">
+                    <input type="text" class="input-control" id="accLastName" value="Vance" required>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="accEmail">Email Address</label>
+                  <div class="input-shell">
+                    <input type="email" class="input-control" id="accEmail" value="vance@familyoffice.com" required>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="accPhone">Mobile Phone</label>
+                  <div class="input-shell">
+                    <input type="tel" class="input-control" id="accPhone" value="+1 (555) 382-9901" required>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  </div>
+                </div>
+
+                <div class="form-group col-span-full" style="margin-top: 6px;">
+                  <button type="submit" class="btn btn-primary" style="height: 48px;">
+                    Save Profile Adjustments
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <div class="account-alert-banner" id="accountAlert">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Profile updates saved successfully.
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       5. FOOTER
+  ========================================================= -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <a href="index.html" class="footer-logo">
+          <span class="logo-badge" style="width: 32px; height: 32px; font-size: 15px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </span>
+          VELOCE
+        </a>
+        <p class="footer-desc">
+          Crafting exceptional rental journeys across North America and Europe. Instant roadside lock, zero excess options, and elite concierge support.
+        </p>
+        <div class="social-links">
+          <a href="#" class="social-btn" aria-label="Twitter">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="LinkedIn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="Instagram">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Vehicles & Fleet</h4>
+        <ul class="footer-links">
+          <li><a href="cars.html">Sports Cars & Coupes</a></li>
+          <li><a href="cars.html">Electric Fleet (EV)</a></li>
+          <li><a href="cars.html">Luxury Executive SUVs</a></li>
+          <li><a href="index.html#services">Chauffeur Service</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support & Policy</h4>
+        <ul class="footer-links">
+          <li><a href="about.html">Rental Guidelines</a></li>
+          <li><a href="index.html#how-it-works">Comprehensive Cover</a></li>
+          <li><a href="index.html#faq">Charging Policy</a></li>
+          <li><a href="index.html#faq">Help Center & FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Headquarters & Concierge</h4>
+        <p class="footer-desc" style="margin-bottom: 14px;">Direct line to client operations and private airside logistics.</p>
+        <ul class="footer-contact-list">
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span>750 Lexington Ave, 24th Fl, New York, NY 10022</span>
+          </li>
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <a href="tel:+18004567890">+1 (800) 456-7890</a>
+          </li>
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <a href="mailto:concierge@velocefleet.com">concierge@velocefleet.com</a>
+          </li>
+          <li class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>Mon - Sun: 24/7 Priority Dispatch</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div>&copy; 2026 Veloce Fleet Technologies Inc. All rights reserved.</div>
+        <div class="footer-legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Security Protocol</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       6. INTERACTION LOGIC (TABS & FORM SAVE)
+  ========================================================= -->
+  <script>
+    // 1. Mobile Drawer Navigation
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+    const closeDrawerLinks = document.querySelectorAll('.close-drawer');
+
+    function toggleMobileDrawer(open) {
+      if (open) {
+        mobileDrawer.classList.add('open');
+        drawerOverlay.classList.add('open');
+        mobileMenuBtn.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileDrawer.classList.remove('open');
+        drawerOverlay.classList.remove('open');
+        mobileMenuBtn.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    mobileMenuBtn.addEventListener('click', () => {
+      const isOpen = mobileDrawer.classList.contains('open');
+      toggleMobileDrawer(!isOpen);
+    });
+
+    drawerOverlay.addEventListener('click', () => toggleMobileDrawer(false));
+    closeDrawerLinks.forEach(link => {
+      link.addEventListener('click', () => toggleMobileDrawer(false));
+    });
+
+    // 2. Dashboard Tab Switching Logic
+    const navButtons = document.querySelectorAll('.dash-nav-btn');
+    const panes = document.querySelectorAll('.dash-pane');
+
+    navButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        navButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const targetId = btn.getAttribute('data-target');
+        panes.forEach(pane => {
+          if (pane.id === targetId) {
+            pane.classList.add('active');
+          } else {
+            pane.classList.remove('active');
+          }
+        });
+      });
+    });
+
+    // 3. Settings Form Simulation (Zero Popups)
+    const settingsForm = document.getElementById('accountSettingsForm');
+    const accountAlert = document.getElementById('accountAlert');
+
+    settingsForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      accountAlert.classList.add('show');
+      setTimeout(() => {
+        accountAlert.classList.remove('show');
+      }, 5000);
+    });
+  </script>
+</body>
+</html>
